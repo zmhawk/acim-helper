@@ -26,11 +26,13 @@ class DataModel extends ChangeNotifier {
     });
   }
 
+  bool get isEmpty => data.isEmpty;
+
   // 随机获取一条数据
-  Item? random() {
-    if (data.isEmpty) {
-      return null;
-    }
+  Item random() {
+    // if (data.isEmpty) {
+    //   return null;
+    // }
     // 生成随机数
     var random = Random();
     // 获取随机数

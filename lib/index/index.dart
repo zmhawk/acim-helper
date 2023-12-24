@@ -1,3 +1,4 @@
+import 'package:acim_helper/index/text.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -71,19 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   key: ValueKey<Item>(item),
                   controller: scrollController,
                   // physics: physics,
-                  child: SelectionArea(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          Text(
-                            item.value,
-                            style: const TextStyle(fontSize: 30, height: 1.8),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  child: TextView(text: item.value),
                 ),
               );
             },

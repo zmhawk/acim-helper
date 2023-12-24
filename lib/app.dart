@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'index.dart';
+import 'index/index.dart';
 import 'models/data.dart';
 
 class MyApp extends StatelessWidget {

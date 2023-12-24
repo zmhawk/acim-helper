@@ -11,9 +11,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Item> history = [];
-  // List<Item> pages = [];
-  // pages[0] 在 history 中的 index
-  int offsetIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -27,79 +24,49 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         );
       }
-      if (history.isEmpty && !data.isEmpty) {
+      if (history.isEmpty) {
         history = [data.random(), data.random(), data.random()];
-        // pages = [...history];
       }
-
-      for (var element in history) {
-        print(element.value);
-      }
+      // assert(history.isNotEmpty);
 
       return Scaffold(
-        body: PageView(
+        body: PageView.custom(
           controller: controller,
           scrollDirection: Axis.vertical,
           onPageChanged: (value) {
-            print(value);
-
-            // 回到上一页
-            if (value == 0) {
-              // 如果已经是第一页，什么都不做
-              if (offsetIndex == 0) {
-                return;
-              }
-              // 当前不是第一页
-              if (offsetIndex > 0) {
-                setState(() {
-                  offsetIndex = offsetIndex - 1;
-                  // pages = history.sublist(offsetIndex, offsetIndex + 3);
-                });
-                controller.jumpToPage(1);
-              }
-            }
-
-            // 中间页
-            if (value == 1) {
-              return;
-            }
-
-            // 下一页
-            if (value == 2) {
-              if (offsetIndex + 3 == history.length) {
-                var item = data.random();
-                setState(() {
-                  history = [...history, item];
-                  offsetIndex += 1;
-                });
-              } else {
-                setState(() {
-                  offsetIndex += 1;
-                });
-              }
-              controller.jumpToPage(1);
+            if (value == history.length - 1) {
+              setState(() {
+                history.add(data.random());
+              });
             }
           },
-          children: history
-              .sublist(offsetIndex, offsetIndex + 3)
-              .map(
-                (e) => Center(
+          childrenDelegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                var item = history[index];
+                // assert(item.isDefinedAndNotNull);
+                return Center(
+                  key: ValueKey<Item>(item),
                   child: SelectionArea(
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Column(
                         children: [
                           Text(
-                            e.value,
+                            item.value,
                             style: const TextStyle(fontSize: 20, height: 1.8),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ),
-              )
-              .toList(),
+                );
+              },
+              childCount: history.length,
+              findChildIndexCallback: (Key key) {
+                final ValueKey<Item> valueKey = key as ValueKey<Item>;
+                final Item data = valueKey.value;
+                return history.indexOf(data);
+              }),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

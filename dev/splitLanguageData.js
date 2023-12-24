@@ -10,14 +10,8 @@ const zh_Hant = [];
 // const en = [];
 
 data.forEach((item) => {
-  zh_Hans.push({
-    key: item[0],
-    value: item[1],
-  });
-  zh_Hant.push({
-    key: item[0],
-    value: item[2],
-  });
+  zh_Hans.push(item[1]);
+  zh_Hant.push(item[2]);
   //   en.push({
   //     key: item[0],
   //     value: item[3],

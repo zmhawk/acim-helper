@@ -3,42 +3,48 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-class Item {
-  final String key;
-  final String value;
-  Item(this.key, this.value);
-
-  static Item fromJson(Map<String, dynamic> json) {
-    return Item(json['key'], json['value']);
-  }
+class DataItem {
+  final int index;
+  final String text;
+  DataItem(this.index, this.text);
 }
 
 class DataModel extends ChangeNotifier {
-  late List<Item> data;
+  late List<String> data;
 
   DataModel() {
     data = [];
     loadData().then((value) {
-      data = (jsonDecode(value) as List<dynamic>)
-          .map((e) => Item.fromJson(e))
-          .toList();
+      data = jsonDecode(value).cast<String>();
       notifyListeners();
     });
   }
 
   bool get isEmpty => data.isEmpty;
 
+  String getText(int index) {
+    return data[index];
+  }
+
+  int getLength() {
+    return data.length;
+  }
+
+  int randomIndex() {
+    var random = Random();
+    // 获取随机数
+    return random.nextInt(data.length);
+  }
+
   // 随机获取一条数据
-  Item random() {
+  DataItem random() {
     // if (data.isEmpty) {
     //   return null;
     // }
     // 生成随机数
-    var random = Random();
-    // 获取随机数
-    var index = random.nextInt(data.length);
+    var index = randomIndex();
     // 返回随机数据
-    return data[index];
+    return DataItem(index, data[index]);
   }
 }
 

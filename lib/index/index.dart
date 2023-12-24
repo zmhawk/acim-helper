@@ -11,7 +11,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Item> history = [];
+  List<DataItem> history = [];
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Consumer(builder: (context, DataModel data, child) {
       if (data.isEmpty) {
-        return const Scaffold(
-          body: Center(
-            child: Text('Loading...'),
-          ),
+        return const Center(
+          child: Text('Loading...'),
         );
       }
       if (history.isEmpty) {
@@ -30,68 +28,67 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       // assert(history.isNotEmpty);
 
-      return Scaffold(
-        body: PageView.custom(
-          controller: controller,
-          scrollDirection: Axis.vertical,
-          clipBehavior: Clip.hardEdge,
-          onPageChanged: (value) {
-            if (value == history.length - 1) {
-              setState(() {
-                history.add(data.random());
-              });
-            }
-          },
-          childrenDelegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              var item = history[index];
-              var scrollController = ScrollController();
-              // ScrollPhysics physics = const ScrollPhysics();
-              return NotificationListener(
-                // onVerticalDragUpdate: (details) {
-                //   print(scrollController.offset);
-                // },
-                onNotification: (notification) {
-                  if (notification is ScrollStartNotification) {
-                    // print(notification.);
-                    if (notification.metrics.pixels >=
-                        notification.metrics.maxScrollExtent) {
-                      print('到底了');
-                      controller.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                      // setState(() {
-                      //   physics = const NeverScrollableScrollPhysics();
-                      // });
-                    }
-                    return false;
+      return PageView.custom(
+        controller: controller,
+        scrollDirection: Axis.vertical,
+        clipBehavior: Clip.hardEdge,
+        onPageChanged: (value) {
+          if (value == history.length - 1) {
+            setState(() {
+              history.add(data.random());
+            });
+          }
+        },
+        childrenDelegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            var item = history[index];
+            var scrollController = ScrollController();
+            // ScrollPhysics physics = const ScrollPhysics();
+            return NotificationListener(
+              // onVerticalDragUpdate: (details) {
+              //   print(scrollController.offset);
+              // },
+              onNotification: (notification) {
+                if (notification is ScrollStartNotification) {
+                  // print(notification.);
+                  if (notification.metrics.pixels >=
+                      notification.metrics.maxScrollExtent) {
+                    print('到底了');
+                    controller.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut);
+                    // setState(() {
+                    //   physics = const NeverScrollableScrollPhysics();
+                    // });
                   }
-                  return true;
-                },
-                child: SingleChildScrollView(
-                  key: ValueKey<Item>(item),
-                  controller: scrollController,
-                  // physics: physics,
-                  child: TextView(text: item.value),
-                ),
-              );
-            },
-            childCount: history.length,
-            findChildIndexCallback: (Key key) {
-              final ValueKey<Item> valueKey = key as ValueKey<Item>;
-              final Item data = valueKey.value;
-              return history.indexOf(data);
-            },
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {});
+                  return false;
+                }
+                return true;
+              },
+              child: SingleChildScrollView(
+                key: ValueKey<DataItem>(item),
+                controller: scrollController,
+                // physics: physics,
+                child: TextView(text: item.text),
+              ),
+            );
           },
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
+          childCount: history.length,
+          findChildIndexCallback: (Key key) {
+            final ValueKey<DataItem> valueKey = key as ValueKey<DataItem>;
+            final DataItem data = valueKey.value;
+            return history.indexOf(data);
+          },
         ),
       );
+      // ,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     setState(() {});
+      //   },
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
     });
   }
 }

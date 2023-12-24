@@ -14,7 +14,7 @@ class TextView extends StatelessWidget {
           children: [
             Text(
               text,
-              style: const TextStyle(fontSize: 30, height: 1.8),
+              style: const TextStyle(fontSize: 20, height: 1.8),
             ),
           ],
         ),

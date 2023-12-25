@@ -1,11 +1,13 @@
+import 'package:acim_helper/models/text.dart';
 import 'package:acim_helper/pages/menu/menu.dart';
 import 'package:acim_helper/pages/search/search.dart';
 import 'package:acim_helper/pages/text.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatefulHookWidget {
   const HomePage({super.key});
 
   @override
@@ -13,33 +15,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  DataItem current = DataItem(-1, 'Loading...');
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (context, DataModel data, child) {
-      if (current.index == -1) {
-        current = data.random();
-      }
-      return Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              const SearchPage(),
-              TextView(text: current.text),
-            ],
-          ),
+    CurrentText current = useContext().read<CurrentText>();
+    DataModel data = useContext().read<DataModel>();
+    if (current.getCurrent.index == -1) {
+      setState(() {
+        current.changeText(data.random());
+      });
+    }
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            const SearchPage(),
+            TextView(text: current.getCurrent.text),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              current = data.random();
-            });
-          },
-          child: const Icon(Icons.refresh),
-        ),
-        drawer: const MenuDrawer(),
-      );
-    });
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            current.changeText(data.random());
+          });
+        },
+        child: const Icon(Icons.refresh),
+      ),
+      drawer: const MenuDrawer(),
+    );
   }
 }

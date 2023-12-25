@@ -8,19 +8,21 @@ class TextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: SelectionArea(
-          child: Text(
-            text,
-            // textAlign: TextAlign.justify,
-            style: TextStyle(
-                color: theme.colorScheme.onSurface,
-                fontSize: 18,
-                fontWeight: FontWeight.normal,
-                decoration: TextDecoration.none,
-                height: 1.8),
+    return Expanded(
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 24),
+          child: SelectionArea(
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: theme.colorScheme.onSurface,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  decoration: TextDecoration.none,
+                  height: 1.8),
+            ),
           ),
         ),
       ),

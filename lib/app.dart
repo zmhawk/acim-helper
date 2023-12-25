@@ -1,3 +1,4 @@
+import 'package:acim_helper/models/text.dart';
 import 'package:acim_helper/pages/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,10 +24,10 @@ class _AppState extends State<App> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true),
       darkTheme: ThemeData.dark(),
-      home: ChangeNotifierProvider(
-        create: (context) => DataModel(),
-        child: const LoadingPage(),
-      ),
+      home: MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => DataModel()),
+        ChangeNotifierProvider(create: (context) => CurrentText()),
+      ], child: const LoadingPage()),
     );
   }
 }

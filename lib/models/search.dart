@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:math';
 
 import 'package:acim_helper/models/data.dart';
 
@@ -23,7 +24,7 @@ SearchResult toPageData({
 }) {
   var total = items.length;
   var start = (page - 1) * length;
-  var data = items.sublist(start, start + length).toList();
+  var data = items.sublist(start, min(start + length, items.length)).toList();
   print('toPageData data length: ${data.length}');
   return SearchResult(data: data, length: length, page: page, total: total);
 }
@@ -96,7 +97,9 @@ SearchResult fuzzySearch({
   print('1 result length: ${result.length}');
 
   result.sort((a, b) => b.count - a.count);
-  result.removeRange(200, result.length);
+  if (result.length > 200) {
+    result.removeRange(200, result.length);
+  }
 
   print('2 result length: ${result.length}');
 

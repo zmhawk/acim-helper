@@ -25,19 +25,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
           ),
         ),
         ListTile(
-          title: const Text('Home'),
+          title: const Text('浏览记录'),
           onTap: () {
             Navigator.pop(context);
           },
         ),
         ListTile(
-          title: const Text('Search'),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          title: const Text('Settings'),
+          title: const Text('设置'),
           onTap: () {
             Navigator.pop(context);
           },

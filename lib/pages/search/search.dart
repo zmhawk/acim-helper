@@ -23,20 +23,57 @@ class _SearchPageState extends State<SearchPage> {
     List<DataItem> dataList = context.watch<DataModel>().data;
 
     return Consumer<DataModel>(builder: (context, data, child) {
-      return SearchAnchor.bar(
+      return SearchAnchor(
         searchController: controller,
         isFullScreen: true,
+        builder: (context, controller) {
+          return SearchBar(
+            hintText: '搜索',
+            onTap: () {
+              controller.openView();
+            },
+            leading: IconButton(
+              onPressed: () {
+                scaffold.openDrawer();
+              },
+              icon: const Icon(Icons.menu),
+            ),
+            trailing: const [
+              ShareMenu(),
+            ],
+          );
+        },
+        viewBuilder: (suggestions) {
+          // print('tab: $tab');
+
+          return Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Column(children: [
+              SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: SegmentedButton(
+                    segments: const [
+                      ButtonSegment(value: 'fuzzy', label: Text('模糊搜索')),
+                      ButtonSegment(value: 'exact', label: Text('精确搜索')),
+                    ],
+                    selected: {tab},
+                    onSelectionChanged: (p0) {
+                      setState(() {
+                        tab = p0.first;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: ListView(
+                children: suggestions.toList(),
+              )),
+            ]),
+          );
+        },
         viewBackgroundColor: theme.colorScheme.surface,
-        barHintText: '搜索',
-        barLeading: IconButton(
-          onPressed: () {
-            scaffold.openDrawer();
-          },
-          icon: const Icon(Icons.menu),
-        ),
-        barTrailing: const [
-          ShareMenu(),
-        ],
         suggestionsBuilder:
             (BuildContext context, SearchController controller) {
           print('keyword: ${controller.text}');
@@ -50,33 +87,15 @@ class _SearchPageState extends State<SearchPage> {
                 keyword: controller.text, length: 200, page: 1, data: dataList);
           }
           print(result.data.length);
-          return [
-            Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: SegmentedButton(
-                      segments: const [
-                        ButtonSegment(value: 'fuzzy', label: Text('模糊搜索')),
-                        ButtonSegment(value: 'exact', label: Text('精确搜索')),
-                      ],
-                      selected: {tab},
-                      onSelectionChanged: (p0) => setState(() {
-                        tab = p0.first;
-                      }),
-                    ),
-                  ),
-                  ...result.data.map((item) {
-                    return Card(
-                        color: theme.colorScheme.surface,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Text(item.text),
-                        ));
-                  }),
-                ])),
-          ].toList();
+
+          return result.data.map((item) {
+            return Card(
+                color: theme.colorScheme.surface,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(item.text),
+                ));
+          });
         },
       );
     });

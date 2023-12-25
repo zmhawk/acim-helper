@@ -24,7 +24,7 @@ SearchResult toPageData({
   var total = items.length;
   var start = (page - 1) * length;
   var data = items.sublist(start, start + length).toList();
-
+  print('toPageData data length: ${data.length}');
   return SearchResult(data: data, length: length, page: page, total: total);
 }
 
@@ -69,10 +69,15 @@ SearchResult fuzzySearch({
   int page = 1,
   List<DataItem> data = const [],
 }) {
+  print('data length: ${data.length}');
   List<String> keywords =
       keyword.replaceAll(RegExp(r'[,，。.\-;；？?！!"“” ]+'), "").split("");
   keywords = keywords.toSet().toList();
   List<SearchItem> result = [];
+
+  if (keywords.isEmpty) {
+    return SearchResult(data: [], length: 0, page: 1, total: 0);
+  }
 
   for (var item in data) {
     int count = 0;
@@ -88,8 +93,12 @@ SearchResult fuzzySearch({
     result.add(SearchItem(item.index, item.text, count: count, weight: 0));
   }
 
+  print('1 result length: ${result.length}');
+
   result.sort((a, b) => b.count - a.count);
   result.removeRange(200, result.length);
+
+  print('2 result length: ${result.length}');
 
   RegExp reg = RegExp('[${keywords.join()}]+', caseSensitive: false);
   for (var item in result) {

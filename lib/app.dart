@@ -21,7 +21,7 @@ class _AppState extends State<App> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
           useMaterial3: true),
       darkTheme: ThemeData.dark(),
       home: MultiProvider(providers: [

@@ -10,12 +10,15 @@ class DataItem {
 }
 
 class DataModel extends ChangeNotifier {
-  late List<String> data;
+  late List<DataItem> data;
 
   DataModel() {
     data = [];
     loadData().then((value) {
-      data = jsonDecode(value).cast<String>();
+      var textList = jsonDecode(value).cast<String>();
+      for (var i = 0; i < textList.length; i++) {
+        data.add(DataItem(i, textList[i]));
+      }
       notifyListeners();
     });
   }
@@ -23,7 +26,7 @@ class DataModel extends ChangeNotifier {
   bool get isEmpty => data.isEmpty;
 
   String getText(int index) {
-    return data[index];
+    return data[index].text;
   }
 
   int getLength() {
@@ -44,7 +47,7 @@ class DataModel extends ChangeNotifier {
     // 生成随机数
     var index = randomIndex();
     // 返回随机数据
-    return DataItem(index, data[index]);
+    return data[index];
   }
 }
 

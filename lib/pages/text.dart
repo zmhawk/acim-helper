@@ -1,3 +1,4 @@
+import 'package:acim_helper/configuration.dart';
 import 'package:flutter/material.dart';
 
 class TextView extends StatelessWidget {
@@ -18,7 +19,7 @@ class TextView extends StatelessWidget {
               text,
               style: TextStyle(
                   color: theme.colorScheme.onSurface,
-                  fontSize: 18,
+                  fontSize: Config().fontSize.toDouble(),
                   fontWeight: FontWeight.normal,
                   decoration: TextDecoration.none,
                   height: 1.8),

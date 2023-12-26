@@ -28,12 +28,12 @@ class Config {
     await save();
   }
 
-  int get fontSize {
-    return config['fontSize']!;
+  double get fontSize {
+    return config['fontSize']!.toDouble();
   }
 
-  setFontSize(int value) async {
-    config['fontSize'] = value;
+  setFontSize(double value) async {
+    config['fontSize'] = value.toInt();
     await save();
   }
 

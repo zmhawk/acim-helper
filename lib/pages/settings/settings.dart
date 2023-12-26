@@ -25,8 +25,15 @@ class _SettingPageState extends State<SettingPage> {
     setState(() {});
   }
 
+  void handleChangeFontSize(fontSize) async {
+    await config.setFontSize(fontSize);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    final fontSize = useState(config.fontSize);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('设置'),
@@ -72,6 +79,28 @@ class _SettingPageState extends State<SettingPage> {
               groupValue: config.themeMode,
               onChanged: handleChangeTheme,
               title: const Text('跟随系统'),
+            ),
+            const Divider(),
+            const ListTile(
+              title: Text('字号'),
+            ),
+            ListTile(
+              title: Text(
+                '奇迹课程 A Course In Miracles',
+                style: TextStyle(fontSize: fontSize.value),
+              ),
+            ),
+            Slider(
+              value: fontSize.value,
+              onChanged: (value) {
+                fontSize.value = value;
+              },
+              onChangeEnd: (value) {
+                handleChangeFontSize(value);
+              },
+              min: 12,
+              max: 36,
+              divisions: 12,
             ),
           ],
         ));

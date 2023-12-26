@@ -34,7 +34,8 @@ class SearchResultList extends HookWidget {
           return ListTile(
             title: Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(result.data[index].text),
+              child: HighlightText(
+                  text: result.data[index].text, keyword: keyword),
             ),
             onTap: () {
               currentText.changeText(result.data[index].index);

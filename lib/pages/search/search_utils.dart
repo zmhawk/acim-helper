@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:math';
 
 import 'package:acim_helper/models/data.dart';
+import 'package:flutter/material.dart';
 
 class SearchResult {
   final int total;
@@ -122,4 +123,41 @@ SearchResult fuzzySearch({
   });
 
   return toPageData(length: length, page: page, items: result);
+}
+
+class HighlightText extends StatelessWidget {
+  const HighlightText({Key? key, required this.text, required this.keyword})
+      : super(key: key);
+
+  final String text;
+  final String keyword;
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
+    List<TextSpan> spans = [];
+    int start = 0;
+    int end = 0;
+    int len = keyword.length;
+    while (end < text.length) {
+      end = text.indexOf(keyword, start);
+      if (end == -1) {
+        spans.add(TextSpan(text: text.substring(start)));
+        break;
+      } else {
+        spans.add(TextSpan(text: text.substring(start, end)));
+        spans.add(TextSpan(
+            text: text.substring(end, end + len),
+            style: TextStyle(
+                color: theme.colorScheme.onPrimaryContainer,
+                backgroundColor: theme.colorScheme.primaryContainer)));
+        start = end + len;
+      }
+    }
+    return RichText(
+        text: TextSpan(
+            children: spans,
+            style: const TextStyle(textBaseline: TextBaseline.alphabetic)));
+  }
 }

@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
-        "首页"
+        "首页",
+        "搜索"
     ]
 }

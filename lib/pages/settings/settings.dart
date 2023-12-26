@@ -14,9 +14,14 @@ class _SettingPageState extends State<SettingPage> {
   Config config = Config();
 
   void handleChangeLanguage(language) async {
-    config.setLanguage(language);
+    await config.setLanguage(language);
     await DataModel().loadData();
     // TODO: reload current text
+    setState(() {});
+  }
+
+  void handleChangeTheme(theme) async {
+    await config.setThemeMode(theme);
     setState(() {});
   }
 
@@ -46,16 +51,27 @@ class _SettingPageState extends State<SettingPage> {
               onChanged: handleChangeLanguage,
               title: const Text('繁体中文'),
             ),
-            // RadioListTile(
-            //   value: Language.enUS,
-            //   groupValue: Language.zhHans,
-            //   onChanged: (value) {
-            //     print(value);
-            //   },
-            //   title: const Text('English'),
-            // ),
+            const Divider(),
             const ListTile(
-              title: Text('设置'),
+              title: Text('深色模式'),
+            ),
+            RadioListTile(
+              value: ThemeMode.dark,
+              groupValue: config.themeMode,
+              onChanged: handleChangeTheme,
+              title: const Text('开启'),
+            ),
+            RadioListTile(
+              value: ThemeMode.light,
+              groupValue: config.themeMode,
+              onChanged: handleChangeTheme,
+              title: const Text('关闭'),
+            ),
+            RadioListTile(
+              value: ThemeMode.system,
+              groupValue: config.themeMode,
+              onChanged: handleChangeTheme,
+              title: const Text('跟随系统'),
             ),
           ],
         ));

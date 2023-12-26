@@ -7,12 +7,10 @@ Future<SharedPreferences> getPrefs() async {
   return await SharedPreferences.getInstance();
 }
 
-enum Brightness { light, dark, system }
-
 enum Language { zhHans, zhHant, enUS }
 
 var config = {
-  'brightness': Brightness.system.index,
+  'themeMode': ThemeMode.system.index,
   'fontSize': 16,
   'language': Language.zhHans.index,
   'color': Colors.lightGreen.value
@@ -21,20 +19,12 @@ var config = {
 class Config {
   Config();
 
-  // fromJson(Map<String, int> json) {
-  //   config = json;
-  // }
-
-  // Map<String, int> toJson() {
-  //   return config;
-  // }
-
-  Brightness get brightness {
-    return Brightness.values[config['brightness']!];
+  ThemeMode get themeMode {
+    return ThemeMode.values[config['themeMode']!];
   }
 
-  setBrightness(Brightness value) async {
-    config['brightness'] = value.index;
+  setThemeMode(ThemeMode value) async {
+    config['themeMode'] = value.index;
     await save();
   }
 
@@ -72,8 +62,12 @@ class Config {
       return;
     }
     var json = jsonDecode(jsonString);
+    print('json themeMode: ${json['themeMode']}');
+    print('ThemeMode.values: ${ThemeMode.values}');
     config = {
-      'brightness': json['brightness'],
+      'themeMode': ThemeMode.values.length > json['themeMode']
+          ? json['themeMode']
+          : ThemeMode.system.index,
       'fontSize': json['fontSize'],
       'language': json['language'],
       'color': json['color']

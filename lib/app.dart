@@ -1,3 +1,4 @@
+import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/models/text.dart';
 import 'package:acim_helper/pages/home.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,15 @@ class _AppState extends State<App> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var themeMode = Config().themeMode;
+    print('themeMode: $themeMode');
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
           useMaterial3: true),
       darkTheme: ThemeData.dark(),
+      themeMode: Config().themeMode,
       home: MultiProvider(providers: [
         ChangeNotifierProvider(create: (context) => DataModel()),
         ChangeNotifierProvider(create: (context) => CurrentText()),

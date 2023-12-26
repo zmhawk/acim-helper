@@ -1,3 +1,4 @@
+import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,8 @@ class LoadingPage extends StatelessWidget {
   final Function onInitializationComplete;
 
   void initializeApp(BuildContext context) async {
-    await loadData();
+    await Config.load();
+    await DataModel().loadData();
     onInitializationComplete();
   }
 

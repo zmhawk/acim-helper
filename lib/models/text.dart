@@ -2,11 +2,16 @@ import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
 
 class CurrentText extends ChangeNotifier {
-  DataItem current = DataItem(-1, 'Loading...');
+  int current = DataModel().randomIndex();
 
-  DataItem get getCurrent => current;
+  CurrentText();
 
-  void changeText(DataItem item) {
+  DataItem get getCurrent {
+    if (current == -1) return DataItem(-1, '');
+    return dataList[current];
+  }
+
+  void changeText(int item) {
     current = item;
     notifyListeners();
   }

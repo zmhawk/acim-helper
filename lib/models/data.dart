@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:acim_helper/configuration.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -39,14 +40,25 @@ class DataModel extends ChangeNotifier {
     // 返回随机数据
     return data[index];
   }
-}
 
-Future<List<DataItem>> loadData() async {
-  dataList = [];
-  var string = await rootBundle.loadString('assets/zh_Hans.json');
-  var textList = jsonDecode(string).cast<String>();
-  for (var i = 0; i < textList.length; i++) {
-    dataList.add(DataItem(i, textList[i]));
+  Future<List<DataItem>> loadData() async {
+    List<DataItem> data = [];
+
+    String fileName = {
+      Language.zhHans: 'zh_Hans.json',
+      Language.zhHant: 'zh_Hant.json',
+      Language.enUS: 'en_US.json'
+    }[Config().language]!;
+
+    var string = await rootBundle.loadString('assets/$fileName');
+    var textList = jsonDecode(string).cast<String>();
+    for (var i = 0; i < textList.length; i++) {
+      data.add(DataItem(i, textList[i]));
+    }
+    dataList = data;
+
+    notifyListeners();
+
+    return dataList;
   }
-  return dataList;
 }

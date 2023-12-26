@@ -19,11 +19,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     CurrentText current = useContext().read<CurrentText>();
     DataModel data = useContext().read<DataModel>();
-    if (current.getCurrent.index == -1) {
-      setState(() {
-        current.changeText(data.random());
-      });
-    }
+    print('home');
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -37,7 +33,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            current.changeText(data.random());
+            current.changeText(data.randomIndex());
           });
         },
         child: const Icon(Icons.refresh),

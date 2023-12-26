@@ -1,16 +1,9 @@
-# acim_helper
+# ACIM 小帮手
 
-A new Flutter project.
+原微信小程序“ACIM 小帮手”，因政策变动，停止维护，即将强制下架
 
-## Getting Started
+作为替代，重新开发了一个独立的应用
 
-This project is a starting point for a Flutter application.
+目前仅提供 Android（安卓） 版和 Web（网页） 版
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+iOS 系统封闭，开发者账号成本高昂（每年 99 美元），并且中国区 App Store 受政府监管，暂时不考虑，请使用 Web 版

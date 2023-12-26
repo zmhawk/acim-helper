@@ -1,26 +1,27 @@
-import 'package:acim_helper/pages/home.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class LoadingPage extends StatefulWidget {
-  const LoadingPage({super.key});
+class LoadingPage extends StatelessWidget {
+  const LoadingPage({Key? key, required this.onInitializationComplete})
+      : super(key: key);
 
-  @override
-  State<LoadingPage> createState() => _LoadingPageState();
-}
+  final Function onInitializationComplete;
 
-class _LoadingPageState extends State<LoadingPage> {
+  void initializeApp(BuildContext context) async {
+    await loadData();
+    onInitializationComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (context, DataModel data, child) {
-      if (data.isEmpty) {
-        return const Center(
-          child: Text('Loading...'),
-        );
-      }
+    initializeApp(context);
 
-      return const HomePage();
-    });
+    return const MaterialApp(
+      home: Center(
+        child: Text(
+          '加载中...',
+        ),
+      ),
+    );
   }
 }

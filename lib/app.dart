@@ -1,5 +1,5 @@
 import 'package:acim_helper/models/text.dart';
-import 'package:acim_helper/pages/loading.dart';
+import 'package:acim_helper/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class _AppState extends State<App> {
       home: MultiProvider(providers: [
         ChangeNotifierProvider(create: (context) => DataModel()),
         ChangeNotifierProvider(create: (context) => CurrentText()),
-      ], child: const LoadingPage()),
+      ], child: const HomePage()),
     );
   }
 }

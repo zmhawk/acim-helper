@@ -8,6 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 
+class HomeArguments {
+  final int index;
+
+  HomeArguments(this.index);
+}
+
 class HomePage extends StatefulHookWidget {
   const HomePage({super.key});
 
@@ -25,7 +31,7 @@ class _HomePageState extends State<HomePage> {
     useEffect(() {
       history.add(currentText.current);
       return null;
-    });
+    }, [currentText.current]);
 
     return Scaffold(
       body: Padding(

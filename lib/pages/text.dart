@@ -12,6 +12,7 @@ class TextView extends HookWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     Config config = useContext().watch<Config>();
+
     return Expanded(
       child: Align(
         alignment: Alignment.topLeft,

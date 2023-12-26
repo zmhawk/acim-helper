@@ -31,6 +31,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const HistoryPage()));
+            // print('index: $index');
+            // if (index > -1) {
+            //   Navigator.pop(context, index);
+            // }
           },
         ),
         ListTile(

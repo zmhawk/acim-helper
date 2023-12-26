@@ -38,15 +38,14 @@ class App extends HookWidget {
   @override
   Widget build(BuildContext context) {
     Config config = useContext().watch<Config>();
-    var themeMode = config.themeMode;
-    print('themeMode: $themeMode');
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
           useMaterial3: true),
       darkTheme: ThemeData.dark(),
-      themeMode: themeMode,
+      themeMode: config.themeMode,
       home: const HomePage(),
     );
   }

@@ -57,6 +57,7 @@ class DataModel extends ChangeNotifier {
     }
     dataList = data;
 
+    print('DataModel loadData');
     notifyListeners();
     return dataList;
   }

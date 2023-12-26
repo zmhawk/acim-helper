@@ -78,6 +78,7 @@ class Config extends ChangeNotifier {
   Future<void> save() async {
     final prefs = await getPrefs();
     await prefs.setString('config', jsonEncode(config));
+    print('Config save');
     notifyListeners();
   }
 }

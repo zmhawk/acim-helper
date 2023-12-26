@@ -16,7 +16,7 @@ class ShareMenu extends StatefulHookWidget {
 class _ShareMenuState extends State<ShareMenu> {
   @override
   Widget build(BuildContext context) {
-    CurrentText currentText = useContext().read<CurrentText>();
+    CurrentText currentText = useContext().watch<CurrentText>();
 
     void copy() {
       Clipboard.setData(ClipboardData(text: currentText.getCurrent.text))

@@ -2,6 +2,7 @@ import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:provider/provider.dart';
 
 class SettingPage extends StatefulHookWidget {
   const SettingPage({super.key});
@@ -11,27 +12,27 @@ class SettingPage extends StatefulHookWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  Config config = Config();
-
-  void handleChangeLanguage(language) async {
-    await config.setLanguage(language);
-    await DataModel().loadData();
-    // TODO: reload current text
-    setState(() {});
-  }
-
-  void handleChangeTheme(theme) async {
-    await config.setThemeMode(theme);
-    setState(() {});
-  }
-
-  void handleChangeFontSize(fontSize) async {
-    await config.setFontSize(fontSize);
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
+    Config config = useContext().watch<Config>();
+    DataModel dataModel = useContext().watch<DataModel>();
+
+    void handleChangeLanguage(language) async {
+      await config.setLanguage(language);
+      await dataModel.loadData();
+      setState(() {});
+    }
+
+    void handleChangeTheme(theme) async {
+      await config.setThemeMode(theme);
+      setState(() {});
+    }
+
+    void handleChangeFontSize(fontSize) async {
+      await config.setFontSize(fontSize);
+      setState(() {});
+    }
+
     final fontSize = useState(config.fontSize);
 
     return Scaffold(

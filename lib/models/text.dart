@@ -2,6 +2,8 @@ import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
 
 class CurrentText extends ChangeNotifier {
+  // final DataModel data;
+
   int current = DataModel().randomIndex();
 
   CurrentText();
@@ -13,6 +15,10 @@ class CurrentText extends ChangeNotifier {
 
   void changeText(int item) {
     current = item;
+    notifyListeners();
+  }
+
+  update() {
     notifyListeners();
   }
 }

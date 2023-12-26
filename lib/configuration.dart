@@ -16,7 +16,7 @@ var config = {
   'color': Colors.lightGreen.value
 };
 
-class Config {
+class Config extends ChangeNotifier {
   Config();
 
   ThemeMode get themeMode {
@@ -77,6 +77,7 @@ class Config {
 
   Future<void> save() async {
     final prefs = await getPrefs();
-    prefs.setString('config', jsonEncode(config));
+    await prefs.setString('config', jsonEncode(config));
+    notifyListeners();
   }
 }

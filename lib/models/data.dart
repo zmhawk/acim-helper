@@ -58,7 +58,6 @@ class DataModel extends ChangeNotifier {
     dataList = data;
 
     notifyListeners();
-
     return dataList;
   }
 }

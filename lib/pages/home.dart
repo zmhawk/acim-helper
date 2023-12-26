@@ -17,9 +17,9 @@ class HomePage extends StatefulHookWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    CurrentText current = useContext().read<CurrentText>();
-    DataModel data = useContext().read<DataModel>();
-    print('home');
+    CurrentText current = useContext().watch<CurrentText>();
+    DataModel data = useContext().watch<DataModel>();
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),

@@ -34,13 +34,15 @@ class _HomePageState extends State<HomePage> {
     }, [currentText.current]);
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const SearchPage(),
-            TextView(text: currentText.getCurrent.text),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              const SearchPage(),
+              TextView(text: currentText.getCurrent.text),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

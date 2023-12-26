@@ -18,8 +18,9 @@ class HistoryModel extends ChangeNotifier {
   }
 
   Future<void> add(value) async {
-    if (_history.isNotEmpty && value == _history.last) {
-      print('index: $value, last: ${_history.last}');
+    print('history add: $value');
+    if (_history.isNotEmpty && value == _history.first) {
+      print('index: $value, last: ${_history.first}');
       return;
     }
 
@@ -33,6 +34,8 @@ class HistoryModel extends ChangeNotifier {
 
     final prefs = await getPrefs();
     await prefs.setString('history', jsonEncode(_history));
+
+    print('history update');
     notifyListeners();
   }
 

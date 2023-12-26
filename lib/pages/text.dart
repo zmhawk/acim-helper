@@ -14,19 +14,21 @@ class TextView extends HookWidget {
     Config config = useContext().watch<Config>();
 
     return Expanded(
-      child: Align(
-        alignment: Alignment.topLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 24),
-          child: SelectionArea(
-            child: Text(
-              text,
-              style: TextStyle(
-                  color: theme.colorScheme.onSurface,
-                  fontSize: config.fontSize,
-                  fontWeight: FontWeight.normal,
-                  decoration: TextDecoration.none,
-                  height: 1.8),
+      child: SingleChildScrollView(
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 24, bottom: 75),
+            child: SelectionArea(
+              child: Text(
+                text,
+                style: TextStyle(
+                    color: theme.colorScheme.onSurface,
+                    fontSize: config.fontSize,
+                    fontWeight: FontWeight.normal,
+                    decoration: TextDecoration.none,
+                    height: 1.8),
+              ),
             ),
           ),
         ),

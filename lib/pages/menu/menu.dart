@@ -12,17 +12,17 @@ class MenuDrawer extends StatefulWidget {
 class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
     return NavigationDrawer(
       children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-          ),
+        DrawerHeader(
+          decoration:
+              BoxDecoration(color: themeData.colorScheme.primaryContainer),
           child: Text(
             'A Course in Miracles',
             style: TextStyle(
-              color: Colors.white,
               fontSize: 24,
+              color: themeData.colorScheme.onPrimaryContainer,
             ),
           ),
         ),

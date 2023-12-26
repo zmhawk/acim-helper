@@ -1,3 +1,4 @@
+import 'package:acim_helper/pages/settings/settings.dart';
 import 'package:flutter/material.dart';
 
 class MenuDrawer extends StatefulWidget {
@@ -33,7 +34,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
         ListTile(
           title: const Text('设置'),
           onTap: () {
-            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SettingPage()));
           },
         ),
       ],

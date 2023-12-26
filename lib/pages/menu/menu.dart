@@ -1,3 +1,4 @@
+import 'package:acim_helper/pages/history/history.dart';
 import 'package:acim_helper/pages/settings/settings.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
         ListTile(
           title: const Text('浏览记录'),
           onTap: () {
-            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const HistoryPage()));
           },
         ),
         ListTile(

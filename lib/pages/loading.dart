@@ -1,5 +1,6 @@
 import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/models/data.dart';
+import 'package:acim_helper/models/history.dart';
 import 'package:flutter/material.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -11,6 +12,7 @@ class LoadingPage extends StatelessWidget {
   void initializeApp(BuildContext context) async {
     await Config.load();
     await DataModel().loadData();
+    await HistoryModel.load();
     onInitializationComplete();
   }
 

@@ -1,5 +1,5 @@
 import 'package:acim_helper/models/data.dart';
-import 'package:acim_helper/models/search.dart';
+import 'package:acim_helper/pages/search/search_utils.dart';
 import 'package:acim_helper/pages/share/share.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -44,8 +44,6 @@ class _SearchPageState extends State<SearchPage> {
           );
         },
         viewBuilder: (suggestions) {
-          // print('tab: $tab');
-
           return Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: Column(children: [
@@ -62,6 +60,7 @@ class _SearchPageState extends State<SearchPage> {
                       setState(() {
                         tab = p0.first;
                       });
+                      // TODO: 没找到更新视图的方法
                     },
                   ),
                 ),

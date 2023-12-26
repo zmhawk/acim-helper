@@ -1,6 +1,6 @@
 import 'package:acim_helper/models/text.dart';
-import 'package:acim_helper/pages/search/copy.dart';
-import 'package:acim_helper/pages/share/copy.dart';
+import 'package:acim_helper/pages/share/copy_utils.dart';
+import 'package:acim_helper/pages/share/copy_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

@@ -1,3 +1,4 @@
+import 'package:acim_helper/models/history.dart';
 import 'package:acim_helper/models/text.dart';
 import 'package:acim_helper/pages/menu/menu.dart';
 import 'package:acim_helper/pages/search/search.dart';
@@ -17,8 +18,14 @@ class HomePage extends StatefulHookWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    CurrentText current = useContext().watch<CurrentText>();
+    CurrentText currentText = useContext().watch<CurrentText>();
     DataModel data = useContext().watch<DataModel>();
+    HistoryModel history = useContext().watch<HistoryModel>();
+
+    useEffect(() {
+      history.add(currentText.current);
+      return null;
+    });
 
     return Scaffold(
       body: Padding(
@@ -26,14 +33,14 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             const SearchPage(),
-            TextView(text: current.getCurrent.text),
+            TextView(text: currentText.getCurrent.text),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            current.changeText(data.randomIndex());
+            currentText.changeText(data.randomIndex());
           });
         },
         child: const Icon(Icons.refresh),

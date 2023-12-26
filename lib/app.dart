@@ -1,4 +1,5 @@
 import 'package:acim_helper/configuration.dart';
+import 'package:acim_helper/models/history.dart';
 import 'package:acim_helper/models/text.dart';
 import 'package:acim_helper/pages/home.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,10 @@ class GlobalProvider extends StatelessWidget {
         ChangeNotifierProxyProvider<DataModel, CurrentText>(
           create: (context) => CurrentText(),
           update: (context, dataModel, currentText) => currentText!..update(),
+        ),
+        ChangeNotifierProxyProvider<DataModel, HistoryModel>(
+          create: (context) => HistoryModel(),
+          update: (context, dataModel, historyModel) => historyModel!..update(),
         ),
         ChangeNotifierProvider(create: (context) => Config())
       ],

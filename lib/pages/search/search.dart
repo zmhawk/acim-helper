@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:acim_helper/pages/search/search_panel.dart';
 import 'package:acim_helper/pages/share/share.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +13,24 @@ class SearchPage extends StatefulHookWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  FocusNode focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     ScaffoldState scaffold = Scaffold.of(context);
-
     return SearchBar(
       hintText: '搜索',
-      onTap: () {
-        showDialog(
+      focusNode: focusNode,
+      onTap: () async {
+        await showDialog(
             context: context,
             builder: (context) {
               return const SearchPanel();
             });
+        Timer(const Duration(milliseconds: 10), () {
+          focusNode.unfocus(
+              disposition: UnfocusDisposition.previouslyFocusedChild);
+        });
       },
       leading: IconButton(
         onPressed: () {

@@ -15,12 +15,10 @@ class CurrentText extends ChangeNotifier {
 
   void changeText(int item) {
     current = item;
-    print('CurrentText changeText');
     notifyListeners();
   }
 
   update() {
-    print('CurrentText update');
     notifyListeners();
   }
 }

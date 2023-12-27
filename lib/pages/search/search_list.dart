@@ -18,8 +18,6 @@ class SearchResultList extends HookWidget {
 
     CurrentText currentText = useContext().watch<CurrentText>();
 
-    print('search result list build: $keyword, $tab');
-
     SearchResult result = SearchResult(data: [], length: 0, page: 1, total: 0);
     if (tab == 'fuzzy') {
       result =

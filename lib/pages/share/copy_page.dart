@@ -18,7 +18,6 @@ class _CopyListState extends State<CopyList> {
   @override
   void initState() {
     super.initState();
-    print(widget.text);
     copySentence = CopySentence(widget.text);
   }
 

@@ -42,7 +42,6 @@ class _SearchPanelState extends State<SearchPanel> {
             decoration:
                 const InputDecoration(border: InputBorder.none, hintText: '搜索'),
             onChanged: (value) {
-              print('onChanged: $value');
               keyword.value = value;
             },
           ),

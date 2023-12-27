@@ -62,8 +62,6 @@ class Config extends ChangeNotifier {
       return;
     }
     var json = jsonDecode(jsonString);
-    print('json themeMode: ${json['themeMode']}');
-    print('ThemeMode.values: ${ThemeMode.values}');
     config = {
       'themeMode': ThemeMode.values.length > json['themeMode']
           ? json['themeMode']
@@ -78,7 +76,6 @@ class Config extends ChangeNotifier {
   Future<void> save() async {
     final prefs = await getPrefs();
     await prefs.setString('config', jsonEncode(config));
-    print('Config save');
     notifyListeners();
   }
 }

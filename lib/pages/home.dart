@@ -40,7 +40,10 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               const SearchPage(),
-              TextView(text: currentText.getCurrent.text),
+              TextView(
+                index: currentText.getCurrent.index,
+                key: Key(currentText.getCurrent.index.toString()),
+              ),
             ],
           ),
         ),

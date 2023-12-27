@@ -11,6 +11,7 @@ class SearchPanel extends StatefulHookWidget {
 
 class _SearchPanelState extends State<SearchPanel> {
   SearchController controller = SearchController();
+  FocusNode focusNode = FocusNode();
   String tab = 'fuzzy';
 
   late TextEditingController _controller;
@@ -29,38 +30,58 @@ class _SearchPanelState extends State<SearchPanel> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     final keyword = useState('');
 
-    return Dialog.fullscreen(
-        child: DefaultTabController(
+    useEffect(() {
+      focusNode.requestFocus();
+      return null;
+    }, []);
+
+    return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: TextField(
-            controller: _controller,
-            autofocus: true,
-            decoration:
-                const InputDecoration(border: InputBorder.none, hintText: '搜索'),
-            onChanged: (value) {
-              keyword.value = value;
-            },
+          appBar: AppBar(
+            elevation: 6,
+            toolbarHeight: 72,
+            flexibleSpace: Container(
+                margin: const EdgeInsets.only(
+                    left: 56, right: 56, top: 12, bottom: 12),
+                // height: 24,
+                child: TextField(
+                  controller: _controller,
+                  focusNode: focusNode,
+                  style: theme.searchViewTheme.headerTextStyle,
+                  decoration: const InputDecoration(
+                      border: InputBorder.none, hintText: '搜索'),
+                  onChanged: (value) {
+                    keyword.value = value;
+                  },
+                )),
+            bottom: TabBar(
+              tabs: const [
+                Tab(text: '模糊搜索'),
+                Tab(text: '精确搜索'),
+              ],
+              dividerColor: theme.colorScheme.outlineVariant,
+            ),
           ),
-          bottom: const TabBar(tabs: [
-            Tab(text: '模糊搜索'),
-            Tab(text: '精确搜索'),
-          ]),
-        ),
-        body: TabBarView(children: [
-          SearchResultList(
-            keyword: keyword.value,
-            tab: 'fuzzy',
-          ),
-          SearchResultList(
-            keyword: keyword.value,
-            tab: 'exact',
-          ),
-        ]),
-      ),
-    ));
+          body: Card(
+            elevation: 6,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.zero)),
+            margin: const EdgeInsets.all(0),
+            child: TabBarView(children: [
+              SearchResultList(
+                keyword: keyword.value,
+                tab: 'fuzzy',
+              ),
+              SearchResultList(
+                keyword: keyword.value,
+                tab: 'exact',
+              ),
+            ]),
+          )),
+    );
   }
 }

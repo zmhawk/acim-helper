@@ -37,6 +37,7 @@ class _ShareMenuState extends State<ShareMenu> {
 
     return PopupMenuButton<String>(
       icon: const Icon(Icons.share),
+      position: PopupMenuPosition.under,
       onSelected: (value) {
         switch (value) {
           case 'copy':

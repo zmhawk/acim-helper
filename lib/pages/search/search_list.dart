@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:acim_helper/models/data.dart';
 import 'package:acim_helper/models/text.dart';
 import 'package:acim_helper/pages/search/search_utils.dart';
@@ -14,6 +16,8 @@ class SearchResultList extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     List<DataItem> dataList = context.watch<DataModel>().data;
 
     CurrentText currentText = useContext().watch<CurrentText>();
@@ -27,9 +31,12 @@ class SearchResultList extends HookWidget {
           exactSearch(keyword: keyword, length: 200, page: 1, data: dataList);
     }
 
+    log('result length: ${result.data.length}');
+
     return ListView.separated(
         itemBuilder: (context, index) {
           return ListTile(
+            tileColor: theme.searchViewTheme.backgroundColor,
             title: Padding(
               padding: const EdgeInsets.all(16),
               child: HighlightText(

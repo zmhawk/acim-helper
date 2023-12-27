@@ -17,12 +17,18 @@ class SearchResult {
       required this.total});
 }
 
+SearchResult defaultResult =
+    SearchResult(data: [], length: 0, page: 1, total: 0);
+
 /// 分页
 SearchResult toPageData({
   int length = 20,
   int page = 1,
   List<DataItem> items = const [],
 }) {
+  if (items.isEmpty) {
+    return defaultResult;
+  }
   var total = items.length;
   var start = (page - 1) * length;
   var data = items.sublist(start, min(start + length, items.length)).toList();
@@ -38,7 +44,7 @@ SearchResult exactSearch({
 }) {
   String temp = keyword.replaceAll(RegExp(r'[,，。;；？?!！|&【】”“ ]+'), " ");
   if (temp.isEmpty || temp.trim() == "") {
-    return SearchResult(data: [], length: 0, page: 1, total: 0);
+    return defaultResult;
   }
   List<String> keywords = temp.split(" ");
   keywords = keywords.map((s) => s.replaceAll(RegExp(r'\.'), r'\.')).toList();
@@ -91,6 +97,10 @@ SearchResult fuzzySearch({
     }
 
     result.add(SearchItem(item.index, item.text, count: count, weight: 0));
+  }
+
+  if (result.isEmpty) {
+    return defaultResult;
   }
 
   result.sort((a, b) => b.count - a.count);

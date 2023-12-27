@@ -22,12 +22,7 @@ class TextView extends HookWidget {
             child: SelectionArea(
               child: Text(
                 text,
-                style: TextStyle(
-                    color: theme.colorScheme.onSurface,
-                    fontSize: config.fontSize,
-                    fontWeight: FontWeight.normal,
-                    decoration: TextDecoration.none,
-                    height: 1.8),
+                style: TextStyle(fontSize: config.fontSize, height: 1.8),
               ),
             ),
           ),

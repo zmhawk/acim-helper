@@ -40,7 +40,7 @@ class App extends HookWidget {
     Config config = useContext().watch<Config>();
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ACIM 小帮手',
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
           useMaterial3: true),

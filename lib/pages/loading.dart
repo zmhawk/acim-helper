@@ -20,12 +20,18 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     initializeApp(context);
 
-    return const MaterialApp(
-      home: Center(
+    return MaterialApp(
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
+          useMaterial3: true),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
+      home: const Scaffold(
+          body: Center(
         child: Text(
-          '加载中...',
+          'Loading...',
         ),
-      ),
+      )),
     );
   }
 }

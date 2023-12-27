@@ -2,6 +2,7 @@ import 'package:acim_helper/models/history.dart';
 import 'package:acim_helper/models/text.dart';
 import 'package:acim_helper/pages/menu/menu.dart';
 import 'package:acim_helper/pages/search/search.dart';
+import 'package:acim_helper/pages/share/share.dart';
 import 'package:acim_helper/pages/text.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage> {
     CurrentText currentText = useContext().watch<CurrentText>();
     DataModel data = useContext().watch<DataModel>();
     HistoryModel history = useContext().watch<HistoryModel>();
+    // ScaffoldState scaffold = Scaffold.of(context);
 
     useEffect(() {
       history.add(currentText.current);
@@ -34,12 +36,14 @@ class _HomePageState extends State<HomePage> {
     }, [currentText.current]);
 
     return Scaffold(
+      appBar: AppBar(
+          title: const Text('ACIM 小帮手'),
+          actions: const [SearchPage(), ShareMenu()]),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              const SearchPage(),
               TextView(
                 index: currentText.getCurrent.index,
                 key: Key(currentText.getCurrent.index.toString()),

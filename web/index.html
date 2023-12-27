@@ -48,9 +48,14 @@
             serviceWorkerVersion: serviceWorkerVersion,
           },
           onEntrypointLoaded: function (engineInitializer) {
-            engineInitializer.initializeEngine().then(function (appRunner) {
-              appRunner.runApp();
-            });
+            engineInitializer
+              .initializeEngine({
+                canvasKitBaseUrl:
+                  "https://cdn.jsdelivr.net/npm/canvaskit-wasm/bin/",
+              })
+              .then(function (appRunner) {
+                appRunner.runApp();
+              });
           },
         });
       });

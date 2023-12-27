@@ -2,5 +2,6 @@
     "conventionalCommits.scopes": [
         "首页",
         "搜索"
-    ]
+    ],
+    "liveServer.settings.root": "build/web"
 }

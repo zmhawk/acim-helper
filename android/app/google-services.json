@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "677316897065",
+    "project_id": "acim-helper",
+    "storage_bucket": "acim-helper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677316897065:android:b5db6647263fc5cb03ef38",
+        "android_client_info": {
+          "package_name": "com.example.acim_helper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCApe1fVxGYM01Ak84qeNekPB37jqBfjmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,9 @@
 import 'package:acim_helper/configuration.dart';
+import 'package:acim_helper/firebase_options.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:acim_helper/models/history.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({Key? key, required this.onInitializationComplete})
@@ -13,6 +15,9 @@ class LoadingPage extends StatelessWidget {
     await Config.load();
     await DataModel().loadData();
     await HistoryModel.load();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     onInitializationComplete();
   }
 

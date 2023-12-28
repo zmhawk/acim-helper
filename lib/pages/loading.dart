@@ -2,8 +2,10 @@ import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/firebase_options.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:acim_helper/models/history.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({Key? key, required this.onInitializationComplete})
@@ -18,6 +20,8 @@ class LoadingPage extends StatelessWidget {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     onInitializationComplete();
   }
 

@@ -41,6 +41,8 @@ dependencies:
   shared_preferences: ^2.2.2
   animations: ^2.0.8
   firebase_core: ^2.24.2
+  firebase_crashlytics: ^3.4.8
+  firebase_analytics: ^10.7.4
 
 dev_dependencies:
   flutter_test:

@@ -49,9 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-// 此秘钥可公开
-// https://firebase.google.com/docs/projects/api-keys?hl=zh&authuser=0
-
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyA6EvH7IwyOHdvUt8fgOeDjkMM-OoPf6AE',
     appId: '1:677316897065:web:d9c16acbbe1a8a2a03ef38',

@@ -28,6 +28,9 @@ class _SearchPageState extends State<SearchPage> {
       openColor: theme.colorScheme.surface,
       middleColor: theme.colorScheme.surface,
       closedElevation: 0,
+      closedShape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
       closedBuilder: (context, openContainer) {
         return IconButton(
           icon: const Icon(Icons.search),

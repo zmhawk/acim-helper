@@ -35,51 +35,49 @@ class _CopyListState extends State<CopyList> {
       });
     }
 
-    return Dialog.fullscreen(
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Text(
-              copySentence.title,
-              style: const TextStyle(fontSize: 18),
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Text(
+            copySentence.title,
+            style: const TextStyle(fontSize: 18),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: copySentence.arr.length,
+              itemBuilder: (context, index) {
+                bool selected = copySentence.copyIndexes[index]!;
+                return CheckboxListTile(
+                  title: Text(copySentence.arr[index]),
+                  value: selected,
+                  onChanged: (value) {
+                    setState(() {
+                      copySentence.copyIndexes[index] = value!;
+                    });
+                  },
+                  selected: selected,
+                  selectedTileColor: theme.colorScheme.primaryContainer,
+                  dense: true,
+                );
+              },
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: copySentence.arr.length,
-                itemBuilder: (context, index) {
-                  bool selected = copySentence.copyIndexes[index]!;
-                  return CheckboxListTile(
-                    title: Text(copySentence.arr[index]),
-                    value: selected,
-                    onChanged: (value) {
-                      setState(() {
-                        copySentence.copyIndexes[index] = value!;
-                      });
-                    },
-                    selected: selected,
-                    selectedTileColor: theme.colorScheme.primaryContainer,
-                    dense: true,
-                  );
-                },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('取消')),
+              FilledButton(
+                onPressed: copy,
+                child: const Text('复制'),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('取消')),
-                FilledButton(
-                  onPressed: copy,
-                  child: const Text('复制'),
-                ),
-              ],
-            )
-          ],
-        ),
+            ],
+          )
+        ],
       ),
     );
   }

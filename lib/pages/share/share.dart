@@ -28,11 +28,18 @@ class _ShareMenuState extends State<ShareMenu> {
     }
 
     void copySentenceStart() {
-      showDialog(
+      showModalBottomSheet(
           context: context,
           builder: (context) {
-            return CopyList(currentText.getCurrent.text);
-          });
+            return CopyList(
+              currentText.getCurrent.text,
+            );
+          },
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height - 64,
+          ),
+          isScrollControlled: true,
+          useSafeArea: true);
     }
 
     return PopupMenuButton<String>(

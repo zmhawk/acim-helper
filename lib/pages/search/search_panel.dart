@@ -43,20 +43,21 @@ class _SearchPanelState extends State<SearchPanel> {
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 72,
-          flexibleSpace: Container(
-              margin: const EdgeInsets.only(
-                  left: 56, right: 56, top: 12, bottom: 12),
-              // height: 24,
-              child: TextField(
-                controller: _controller,
-                focusNode: focusNode,
-                style: theme.searchViewTheme.headerTextStyle,
-                decoration: const InputDecoration(
-                    border: InputBorder.none, hintText: '搜索'),
-                onChanged: (value) {
-                  keyword.value = value;
-                },
-              )),
+          flexibleSpace: SafeArea(
+              child: Container(
+                  margin: const EdgeInsets.only(
+                      left: 56, right: 56, top: 12, bottom: 12),
+                  // height: 24,
+                  child: TextField(
+                    controller: _controller,
+                    focusNode: focusNode,
+                    style: theme.searchViewTheme.headerTextStyle,
+                    decoration: const InputDecoration(
+                        border: InputBorder.none, hintText: '搜索'),
+                    onChanged: (value) {
+                      keyword.value = value;
+                    },
+                  ))),
           bottom: const TabBar(
             tabs: [
               Tab(text: '模糊搜索'),

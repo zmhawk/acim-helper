@@ -26,7 +26,7 @@ class TextView extends HookWidget {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 24, bottom: 75),
+                  padding: const EdgeInsets.only(top: 0, bottom: 75),
                   child: SelectionArea(
                     child: Text(
                       dataModel.data[i].text,

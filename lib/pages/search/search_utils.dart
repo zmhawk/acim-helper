@@ -162,6 +162,8 @@ class HighlightText extends StatelessWidget {
     return RichText(
         text: TextSpan(
             children: spans,
-            style: const TextStyle(textBaseline: TextBaseline.alphabetic)));
+            style: TextStyle(
+                textBaseline: TextBaseline.alphabetic,
+                color: theme.colorScheme.onSurface)));
   }
 }

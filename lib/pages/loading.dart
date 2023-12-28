@@ -28,9 +28,7 @@ class LoadingPage extends StatelessWidget {
       themeMode: ThemeMode.system,
       home: const Scaffold(
           body: Center(
-        child: Text(
-          'Loading...',
-        ),
+        child: CircularProgressIndicator(),
       )),
     );
   }

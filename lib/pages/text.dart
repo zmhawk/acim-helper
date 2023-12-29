@@ -16,27 +16,42 @@ class TextView extends HookWidget {
     final PageController controller = PageController(initialPage: index);
 
     return Expanded(
-      child: PageView.custom(
-        controller: controller,
-        scrollDirection: Axis.horizontal,
-        childrenDelegate: SliverChildBuilderDelegate(
-          childCount: dataModel.getLength(),
-          (context, i) {
-            return SingleChildScrollView(
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 0, bottom: 75),
-                  child: SelectionArea(
-                    child: Text(
-                      dataModel.data[i].text,
-                      style: TextStyle(fontSize: config.fontSize, height: 1.8),
+      child: GestureDetector(
+        onTapUp: (details) {
+          var width = MediaQuery.of(context).size.width;
+          if (details.globalPosition.dx < width / 3) {
+            controller.previousPage(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOutCubicEmphasized);
+          } else if (details.globalPosition.dx > width / 3 * 2) {
+            controller.nextPage(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.ease);
+          }
+        },
+        child: PageView.custom(
+          controller: controller,
+          scrollDirection: Axis.horizontal,
+          childrenDelegate: SliverChildBuilderDelegate(
+            childCount: dataModel.getLength(),
+            (context, i) {
+              return SingleChildScrollView(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 0, bottom: 75),
+                    child: SelectionArea(
+                      child: Text(
+                        dataModel.data[i].text,
+                        style:
+                            TextStyle(fontSize: config.fontSize, height: 1.8),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:acim_helper/configuration.dart';
+import 'package:acim_helper/models/favorite.dart';
 import 'package:acim_helper/models/history.dart';
 import 'package:acim_helper/models/text.dart';
 import 'package:acim_helper/pages/home.dart';
@@ -23,6 +24,11 @@ class GlobalProvider extends StatelessWidget {
         ChangeNotifierProxyProvider<DataModel, HistoryModel>(
           create: (context) => HistoryModel(),
           update: (context, dataModel, historyModel) => historyModel!..update(),
+        ),
+        ChangeNotifierProxyProvider<DataModel, FavoriteModel>(
+          create: (context) => FavoriteModel(),
+          update: (context, dataModel, favoriteModel) =>
+              favoriteModel!..update(),
         ),
         ChangeNotifierProvider(create: (context) => Config())
       ],

@@ -1,5 +1,6 @@
 import 'package:acim_helper/models/history.dart';
 import 'package:acim_helper/models/text.dart';
+import 'package:acim_helper/pages/favorite/favorite_btn.dart';
 import 'package:acim_helper/pages/menu/menu.dart';
 import 'package:acim_helper/pages/search/search.dart';
 import 'package:acim_helper/pages/share/share.dart';
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
           title: const Text('ACIM 小帮手'),
-          actions: const [SearchPage(), ShareMenu()]),
+          actions: const [SearchPage(), FavoriteBtn(), ShareMenu()]),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),

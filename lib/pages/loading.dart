@@ -1,8 +1,10 @@
 import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/firebase_options.dart';
 import 'package:acim_helper/models/data.dart';
+import 'package:acim_helper/models/favorite.dart';
 import 'package:acim_helper/models/history.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -14,14 +16,21 @@ class LoadingPage extends StatelessWidget {
   final Function onInitializationComplete;
 
   void initializeApp(BuildContext context) async {
-    await Config.load();
-    await DataModel().loadData();
-    await HistoryModel.load();
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    await Future.wait([
+      Config.load(),
+      DataModel().loadData(),
+      HistoryModel.load(),
+      FavoriteModel.load(),
+      Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      ),
+    ]);
     FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    if (!kIsWeb) {
+      FlutterError.onError =
+          FirebaseCrashlytics.instance.recordFlutterFatalError;
+    }
+
     onInitializationComplete();
   }
 

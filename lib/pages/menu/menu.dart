@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:acim_helper/pages/favorite/favorite.dart';
 import 'package:acim_helper/pages/history/history.dart';
 import 'package:acim_helper/pages/settings/settings.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,14 @@ class _MenuDrawerState extends State<MenuDrawer> {
           onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const HistoryPage()));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.favorite_border_outlined),
+          title: const Text('收藏夹'),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const FavoritePage()));
           },
         ),
         ListTile(

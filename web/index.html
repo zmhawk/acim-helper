@@ -50,9 +50,9 @@
           onEntrypointLoaded: function (engineInitializer) {
             engineInitializer
               .initializeEngine({
-                canvasKitBaseUrl:
-                  "https://cdn.jsdelivr.net/npm/canvaskit-wasm/bin/",
-                canvasKitVariant: "full",
+                // canvasKitBaseUrl:
+                //   "https://cdn.jsdelivr.net/npm/canvaskit-wasm@0.39.1/bin/",
+                // canvasKitVariant: "full",
               })
               .then(function (appRunner) {
                 appRunner.runApp();

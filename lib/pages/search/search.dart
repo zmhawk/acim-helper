@@ -33,7 +33,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       closedBuilder: (context, openContainer) {
         return IconButton(
-          icon: const Icon(Icons.search),
+          icon: const Icon(Icons.search_outlined),
           onPressed: () {
             openContainer();
           },

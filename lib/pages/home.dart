@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
             currentText.changeText(data.randomIndex());
           });
         },
-        child: const Icon(Icons.refresh),
+        child: const Icon(Icons.refresh_outlined),
       ),
       drawer: const MenuDrawer(),
     );

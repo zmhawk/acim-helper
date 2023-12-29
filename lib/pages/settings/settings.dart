@@ -40,7 +40,7 @@ class _SettingPageState extends State<SettingPage> {
           title: const Text('设置'),
           leading: IconButton(
               onPressed: () => {Navigator.pop(context)},
-              icon: const Icon(Icons.arrow_back)),
+              icon: const Icon(Icons.arrow_back_outlined)),
         ),
         body: ListView(
           children: [

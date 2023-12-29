@@ -19,7 +19,7 @@ class HistoryPage extends HookWidget {
           title: const Text('浏览历史'),
           leading: IconButton(
               onPressed: () => {Navigator.pop(context)},
-              icon: const Icon(Icons.arrow_back)),
+              icon: const Icon(Icons.arrow_back_outlined)),
         ),
         body: ListView.builder(
             itemCount: history.length,

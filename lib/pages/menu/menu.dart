@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:acim_helper/pages/history/history.dart';
 import 'package:acim_helper/pages/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 class MenuDrawer extends StatefulWidget {
   const MenuDrawer({Key? key}) : super(key: key);
@@ -28,6 +31,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           ),
         ),
         ListTile(
+          leading: const Icon(Icons.history_outlined),
           title: const Text('浏览记录'),
           onTap: () {
             Navigator.push(context,
@@ -35,6 +39,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           },
         ),
         ListTile(
+          leading: const Icon(Icons.settings_outlined),
           title: const Text('设置'),
           onTap: () {
             Navigator.push(context,
@@ -42,26 +47,21 @@ class _MenuDrawerState extends State<MenuDrawer> {
           },
         ),
         ListTile(
-          title: const Text('联系作者'),
-          onTap: () async {
-            Clipboard.setData(const ClipboardData(text: '逆行者的奇迹漫谈'));
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('联系作者'),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('微信公众号：逆行者的奇迹漫谈'),
-                        Text(
-                          '（已复制到剪贴板）',
-                          style: themeData.textTheme.bodySmall,
-                        )
-                      ],
-                    ),
-                  );
-                });
+          leading: const Icon(Icons.info_outline),
+          title: const Text('关于此应用'),
+          onTap: () {
+            showAboutDialog(
+              context: context,
+              applicationName: 'ACIM 小帮手',
+              applicationIcon: const Icon(Icons.book_outlined),
+              children: [
+                const Text('原微信小程序：ACIM 小帮手'),
+                const Text('作者：逆行者'),
+                const Text('微信公众号：逆行者的奇迹漫谈'),
+                const Linkify(
+                    text: '项目地址：https://github.com/zmhawk/acim-helper'),
+              ],
+            );
           },
         ),
       ],

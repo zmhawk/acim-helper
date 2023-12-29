@@ -43,7 +43,7 @@ class _ShareMenuState extends State<ShareMenu> {
     }
 
     return PopupMenuButton<String>(
-      icon: const Icon(Icons.share),
+      icon: const Icon(Icons.share_outlined),
       position: PopupMenuPosition.under,
       onSelected: (value) {
         switch (value) {

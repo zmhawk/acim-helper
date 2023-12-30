@@ -35,17 +35,21 @@ class CopyList extends StatelessWidget {
             child: ListView.builder(
               itemCount: copySentence.value.arr.length,
               itemBuilder: (context, index) {
-                bool selected = copySentence.value.copyIndexes[index]!;
-                return CheckboxListTile(
-                  title: Text(copySentence.value.arr[index]),
-                  value: selected,
-                  onChanged: (value) {
-                    copySentence.value.copyIndexes[index] = value!;
-                  },
-                  selected: selected,
-                  selectedTileColor: theme.colorScheme.primaryContainer,
-                  dense: true,
-                );
+                return Obx(() {
+                  bool selected = copySentence.value.copyIndexes[index]!;
+                  return CheckboxListTile(
+                    title: Text(copySentence.value.arr[index]),
+                    value: selected,
+                    onChanged: (value) {
+                      copySentence.update((val) {
+                        val!.copyIndexes[index] = value!;
+                      });
+                    },
+                    selected: selected,
+                    selectedTileColor: theme.colorScheme.primaryContainer,
+                    dense: true,
+                  );
+                });
               },
             ),
           ),

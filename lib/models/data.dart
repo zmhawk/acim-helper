@@ -1,10 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:acim_helper/configuration.dart';
-import 'package:acim_helper/models/drawItem.dart';
-import 'package:acim_helper/models/favorite.dart';
-import 'package:acim_helper/models/history.dart';
-import 'package:acim_helper/models/viewItem.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:get/state_manager.dart';
 

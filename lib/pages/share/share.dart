@@ -1,11 +1,8 @@
-import 'package:acim_helper/models/data.dart';
 import 'package:acim_helper/models/viewItem.dart';
 import 'package:acim_helper/pages/share/copy_utils.dart';
 import 'package:acim_helper/pages/share/copy_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
 
 class ShareMenu extends StatelessWidget {
   const ShareMenu({Key? key}) : super(key: key);

@@ -1,6 +1,5 @@
 import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/models/data.dart';
-import 'package:acim_helper/models/history.dart';
 import 'package:acim_helper/models/viewItem.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';

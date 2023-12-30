@@ -1,45 +1,40 @@
 import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/models/data.dart';
+import 'package:acim_helper/models/drawItem.dart';
+import 'package:acim_helper/models/favorite.dart';
+import 'package:acim_helper/models/history.dart';
+import 'package:acim_helper/models/viewItem.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
+import 'package:get/state_manager.dart';
 
-class SettingPage extends StatefulHookWidget {
+class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
-}
-
-class _SettingPageState extends State<SettingPage> {
-  @override
   Widget build(BuildContext context) {
-    Config config = useContext().watch<Config>();
-    DataModel dataModel = useContext().watch<DataModel>();
-
     void handleChangeLanguage(language) async {
-      await config.setLanguage(language);
-      await dataModel.loadData();
-      setState(() {});
+      Config().setLanguage(language);
+      await Database.load();
+      // 重新加载
+      HistoryModel.load();
+      FavoriteModel.load();
+      drawItem.value = db.data[drawItem.value.index];
+      viewItem.value = db.data[viewItem.value.index];
     }
 
-    void handleChangeTheme(theme) async {
-      await config.setThemeMode(theme);
-      setState(() {});
+    void handleChangeTheme(theme) {
+      Config().setThemeMode(theme);
     }
 
-    void handleChangeFontSize(fontSize) async {
-      await config.setFontSize(fontSize);
-      setState(() {});
+    void handleChangeFontSize(fontSize) {
+      Config().setFontSize(fontSize);
     }
-
-    final fontSize = useState(config.fontSize);
 
     return Scaffold(
         appBar: AppBar(
           title: const Text('设置'),
           leading: IconButton(
-              onPressed: () => {Navigator.pop(context)},
+              onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.arrow_back_outlined)),
         ),
         body: ListView(
@@ -47,62 +42,62 @@ class _SettingPageState extends State<SettingPage> {
             const ListTile(
               title: Text('语言'),
             ),
-            RadioListTile(
-              value: Language.zhHans,
-              groupValue: config.language,
-              onChanged: handleChangeLanguage,
-              title: const Text('简体中文'),
-            ),
-            RadioListTile(
-              value: Language.zhHant,
-              groupValue: config.language,
-              onChanged: handleChangeLanguage,
-              title: const Text('繁体中文'),
-            ),
+            Obx(() => RadioListTile(
+                  value: Language.zhHans,
+                  groupValue: Config().language,
+                  onChanged: handleChangeLanguage,
+                  title: const Text('简体中文'),
+                )),
+            Obx(() => RadioListTile(
+                  value: Language.zhHant,
+                  groupValue: Config().language,
+                  onChanged: handleChangeLanguage,
+                  title: const Text('繁体中文'),
+                )),
             const Divider(),
             const ListTile(
               title: Text('深色模式'),
             ),
-            RadioListTile(
-              value: ThemeMode.dark,
-              groupValue: config.themeMode,
-              onChanged: handleChangeTheme,
-              title: const Text('开启'),
-            ),
-            RadioListTile(
-              value: ThemeMode.light,
-              groupValue: config.themeMode,
-              onChanged: handleChangeTheme,
-              title: const Text('关闭'),
-            ),
-            RadioListTile(
-              value: ThemeMode.system,
-              groupValue: config.themeMode,
-              onChanged: handleChangeTheme,
-              title: const Text('跟随系统'),
-            ),
+            Obx(() => RadioListTile(
+                  value: ThemeMode.dark,
+                  groupValue: Config().themeMode,
+                  onChanged: handleChangeTheme,
+                  title: const Text('开启'),
+                )),
+            Obx(() => RadioListTile(
+                  value: ThemeMode.light,
+                  groupValue: Config().themeMode,
+                  onChanged: handleChangeTheme,
+                  title: const Text('关闭'),
+                )),
+            Obx(() => RadioListTile(
+                  value: ThemeMode.system,
+                  groupValue: Config().themeMode,
+                  onChanged: handleChangeTheme,
+                  title: const Text('跟随系统'),
+                )),
             const Divider(),
             const ListTile(
               title: Text('字号'),
             ),
-            ListTile(
-              title: Text(
-                '奇迹课程 A Course In Miracles',
-                style: TextStyle(fontSize: fontSize.value),
-              ),
-            ),
-            Slider(
-              value: fontSize.value,
-              onChanged: (value) {
-                fontSize.value = value;
-              },
-              onChangeEnd: (value) {
-                handleChangeFontSize(value);
-              },
-              min: 12,
-              max: 36,
-              divisions: 12,
-            ),
+            Obx(() => ListTile(
+                  title: Text(
+                    '奇迹课程 A Course In Miracles',
+                    style: TextStyle(fontSize: Config().fontSize),
+                  ),
+                )),
+            Obx(() => Slider(
+                  value: Config().fontSize,
+                  onChanged: (value) {
+                    Config().setFontSize(value);
+                  },
+                  onChangeEnd: (value) {
+                    handleChangeFontSize(value);
+                  },
+                  min: 12,
+                  max: 36,
+                  divisions: 12,
+                )),
           ],
         ));
   }

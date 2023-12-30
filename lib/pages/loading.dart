@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({Key? key, required this.onInitializationComplete})
@@ -16,15 +17,16 @@ class LoadingPage extends StatelessWidget {
   final Function onInitializationComplete;
 
   void initializeApp(BuildContext context) async {
+    await GetStorage.init();
+    Config.load();
     await Future.wait([
-      Config.load(),
-      DataModel().loadData(),
-      HistoryModel.load(),
-      FavoriteModel.load(),
+      Database.load(),
       Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       ),
     ]);
+    HistoryModel.load();
+    FavoriteModel.load();
     FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     if (!kIsWeb) {
       FlutterError.onError =

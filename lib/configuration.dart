@@ -1,68 +1,66 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-Future<SharedPreferences> getPrefs() async {
-  return await SharedPreferences.getInstance();
-}
+import 'package:get/state_manager.dart';
+import 'package:get_storage/get_storage.dart';
 
 enum Language { zhHans, zhHant, enUS }
 
-var config = {
+final config = {
   'themeMode': ThemeMode.system.index,
   'fontSize': 16,
   'language': Language.zhHans.index,
   'color': Colors.lightGreen.value
-};
+}.obs;
 
-class Config extends ChangeNotifier {
-  Config();
-
+class Config {
   ThemeMode get themeMode {
     return ThemeMode.values[config['themeMode']!];
   }
 
-  setThemeMode(ThemeMode value) async {
+  setThemeMode(ThemeMode value) {
     config['themeMode'] = value.index;
-    await save();
+    save();
   }
 
   double get fontSize {
     return config['fontSize']!.toDouble();
   }
 
-  setFontSize(double value) async {
+  setFontSize(double value) {
     config['fontSize'] = value.toInt();
-    await save();
+    save();
   }
 
   Language get language {
     return Language.values[config['language']!];
   }
 
-  setLanguage(Language value) async {
+  setLanguage(Language value) {
     config['language'] = value.index;
-    await save();
+    save();
   }
 
   Color get color {
     return Color(config['color']!);
   }
 
-  setColor(Color value) async {
+  setColor(Color value) {
     config['color'] = value.value;
-    await save();
+    save();
   }
 
-  static Future<void> load() async {
-    final prefs = await getPrefs();
-    final jsonString = prefs.getString('config');
+  save() {
+    GetStorage().write('config', jsonEncode(config));
+  }
+
+  static void load() {
+    final jsonString = GetStorage().read('config');
     if (jsonString == null) {
       return;
     }
     var json = jsonDecode(jsonString);
-    config = {
+    config.value = {
       'themeMode': ThemeMode.values.length > json['themeMode']
           ? json['themeMode']
           : ThemeMode.system.index,
@@ -72,10 +70,6 @@ class Config extends ChangeNotifier {
     };
     return;
   }
-
-  Future<void> save() async {
-    final prefs = await getPrefs();
-    await prefs.setString('config', jsonEncode(config));
-    notifyListeners();
-  }
 }
+
+// final config = Config();

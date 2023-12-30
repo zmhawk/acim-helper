@@ -1,42 +1,40 @@
 import 'package:acim_helper/pages/search/search_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/state_manager.dart';
 
-class SearchPanel extends StatefulHookWidget {
-  const SearchPanel({Key? key}) : super(key: key);
+class SearchPanel extends StatelessWidget {
+  SearchPanel({Key? key}) : super(key: key);
 
-  @override
-  State<SearchPanel> createState() => _SearchPanelState();
-}
+  final controller = SearchController();
+  final focusNode = FocusNode();
+  // final tab = 'fuzzy'.obs;
 
-class _SearchPanelState extends State<SearchPanel> {
-  SearchController controller = SearchController();
-  FocusNode focusNode = FocusNode();
-  String tab = 'fuzzy';
+  // late TextEditingController _controller;
 
-  late TextEditingController _controller;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _controller = TextEditingController();
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final keyword = useState('');
+    final keyword = ''.obs;
 
-    useEffect(() {
-      focusNode.requestFocus();
-      return null;
-    }, []);
+    focusNode.requestFocus();
+
+    // useEffect(() {
+    //   focusNode.requestFocus();
+    //   return null;
+    // }, []);
 
     return DefaultTabController(
       length: 2,
@@ -49,7 +47,7 @@ class _SearchPanelState extends State<SearchPanel> {
                       left: 56, right: 56, top: 12, bottom: 12),
                   // height: 24,
                   child: TextField(
-                    controller: _controller,
+                    // controller: _controller,
                     focusNode: focusNode,
                     style: theme.searchViewTheme.headerTextStyle,
                     decoration: const InputDecoration(
@@ -66,14 +64,14 @@ class _SearchPanelState extends State<SearchPanel> {
           ),
         ),
         body: TabBarView(children: [
-          SearchResultList(
-            keyword: keyword.value,
-            tab: 'fuzzy',
-          ),
-          SearchResultList(
-            keyword: keyword.value,
-            tab: 'exact',
-          ),
+          Obx(() => SearchResultList(
+                keyword: keyword.value,
+                tab: 'fuzzy',
+              )),
+          Obx(() => SearchResultList(
+                keyword: keyword.value,
+                tab: 'exact',
+              )),
         ]),
       ),
     );

@@ -1,16 +1,10 @@
 import 'package:acim_helper/pages/search/search_panel.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class SearchPage extends StatefulHookWidget {
+class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
 
-  @override
-  State<SearchPage> createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
   final ContainerTransitionType _containerTransitionType =
       ContainerTransitionType.fadeThrough;
 
@@ -22,7 +16,7 @@ class _SearchPageState extends State<SearchPage> {
       transitionType: _containerTransitionType,
       transitionDuration: const Duration(milliseconds: 500),
       openBuilder: (context, _) {
-        return const SearchPanel();
+        return SearchPanel();
       },
       closedColor: theme.colorScheme.surface,
       openColor: theme.colorScheme.surface,

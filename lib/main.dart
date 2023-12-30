@@ -9,5 +9,5 @@ void main() {
 }
 
 void runMainApp() {
-  runApp(const GlobalProvider());
+  runApp(const App());
 }

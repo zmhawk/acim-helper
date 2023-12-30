@@ -1,62 +1,41 @@
 import 'dart:convert';
 
 import 'package:acim_helper/models/data.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:acim_helper/models/viewItem.dart';
+import 'package:get/state_manager.dart';
+import 'package:get_storage/get_storage.dart';
 
-Future<SharedPreferences> getPrefs() async {
-  return await SharedPreferences.getInstance();
-}
+final favorite = <DataItem>[].obs;
 
-List<int> _favorite = [];
-
-class FavoriteModel extends ChangeNotifier {
-  FavoriteModel();
-
-  List<DataItem> get favorite {
-    return _favorite.map((e) => dataList[e]).toList();
-  }
-
-  bool isFavorite(int index) {
-    return _favorite.contains(index);
-  }
-
-  Future<void> add(value) async {
-    if (_favorite.isNotEmpty && value == _favorite.first) {
+class FavoriteModel {
+  void add(DataItem item) {
+    if (favorite.isNotEmpty && item == favorite.first) {
       return;
     }
 
-    _favorite.remove(value);
-    _favorite.insert(0, value);
-
-    final prefs = await getPrefs();
-    await prefs.setString('favorite', jsonEncode(_favorite));
-
-    notifyListeners();
+    favorite.remove(item);
+    favorite.insert(0, item);
+    save();
   }
 
-  // remove
-  Future<void> remove(value) async {
-    _favorite.remove(value);
+  void remove(DataItem item) {
+    favorite.remove(item);
 
-    final prefs = await getPrefs();
-    await prefs.setString('favorite', jsonEncode(_favorite));
-
-    notifyListeners();
+    save();
   }
 
-  static Future<void> load() async {
-    final prefs = await getPrefs();
-    final jsonString = prefs.getString('favorite');
+  void save() {
+    GetStorage()
+        .write('favorite', jsonEncode(favorite.map((e) => e.id).toList()));
+  }
+
+  static void load() {
+    final jsonString = GetStorage().read('favorite');
     if (jsonString == null) {
       return;
     }
     var json = jsonDecode(jsonString);
-    _favorite = List.from(json);
+    favorite.value = db.getListByIds(List.from(json));
     return;
-  }
-
-  update() {
-    notifyListeners();
   }
 }

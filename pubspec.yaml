@@ -44,6 +44,8 @@ dependencies:
   firebase_crashlytics: ^3.4.8
   firebase_analytics: ^10.7.4
   flutter_linkify: ^6.0.0
+  get: ^4.6.6
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

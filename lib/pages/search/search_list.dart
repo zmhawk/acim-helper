@@ -1,13 +1,12 @@
 import 'dart:developer';
 
 import 'package:acim_helper/models/data.dart';
-import 'package:acim_helper/models/text.dart';
+import 'package:acim_helper/models/drawItem.dart';
+import 'package:acim_helper/models/viewItem.dart';
 import 'package:acim_helper/pages/search/search_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
 
-class SearchResultList extends HookWidget {
+class SearchResultList extends StatelessWidget {
   const SearchResultList({Key? key, required this.keyword, required this.tab})
       : super(key: key);
 
@@ -18,17 +17,13 @@ class SearchResultList extends HookWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    List<DataItem> dataList = context.watch<DataModel>().data;
-
-    CurrentText currentText = useContext().watch<CurrentText>();
-
     SearchResult result = SearchResult(data: [], length: 0, page: 1, total: 0);
     if (tab == 'fuzzy') {
       result =
-          fuzzySearch(keyword: keyword, length: 200, page: 1, data: dataList);
+          fuzzySearch(keyword: keyword, length: 200, page: 1, data: db.data);
     } else if (tab == 'exact') {
       result =
-          exactSearch(keyword: keyword, length: 200, page: 1, data: dataList);
+          exactSearch(keyword: keyword, length: 200, page: 1, data: db.data);
     }
 
     log('result length: ${result.data.length}');
@@ -43,7 +38,8 @@ class SearchResultList extends HookWidget {
                   text: result.data[index].text, keyword: keyword),
             ),
             onTap: () {
-              currentText.changeText(result.data[index].index);
+              drawItem.value = result.data[index];
+              viewItem.value = result.data[index];
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 Navigator.defaultRouteName,

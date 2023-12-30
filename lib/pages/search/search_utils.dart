@@ -65,7 +65,7 @@ SearchResult exactSearch({
 class SearchItem extends DataItem {
   final int count;
   late int weight;
-  SearchItem(super.index, super.text,
+  SearchItem(super.index, super.text, super.id,
       {required this.count, required this.weight});
 }
 
@@ -96,7 +96,8 @@ SearchResult fuzzySearch({
       continue;
     }
 
-    result.add(SearchItem(item.index, item.text, count: count, weight: 0));
+    result.add(
+        SearchItem(item.index, item.text, item.id, count: count, weight: 0));
   }
 
   if (result.isEmpty) {

@@ -1,23 +1,28 @@
 import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/models/data.dart';
+import 'package:acim_helper/models/history.dart';
+import 'package:acim_helper/models/viewItem.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
+import 'package:get/state_manager.dart';
 
-class TextView extends HookWidget {
-  const TextView({Key? key, required this.index}) : super(key: key);
+class TextView extends StatelessWidget {
+  const TextView({Key? key, required this.data}) : super(key: key);
 
-  final int index;
+  // 此处为抽卡得到的数据，不是当前展示的数据
+  final DataItem data;
 
   @override
   Widget build(BuildContext context) {
-    Config config = useContext().watch<Config>();
-    DataModel dataModel = useContext().watch<DataModel>();
-    final PageController controller = PageController(initialPage: index);
+    final PageController controller = PageController(initialPage: data.index);
+
+    print('TextView');
+
+    // ever(viewItem, (callback) => HistoryModel().add(viewItem.value));
 
     return Expanded(
       child: GestureDetector(
         onTapUp: (details) {
+          // FIX: 文本超长，出现滚动条时，无法翻页
           var width = MediaQuery.of(context).size.width;
           if (details.globalPosition.dx < width / 3) {
             controller.previousPage(
@@ -32,8 +37,12 @@ class TextView extends HookWidget {
         child: PageView.custom(
           controller: controller,
           scrollDirection: Axis.horizontal,
+          // 翻页时
+          onPageChanged: (index) {
+            viewItem.value = db.data[index];
+          },
           childrenDelegate: SliverChildBuilderDelegate(
-            childCount: dataModel.getLength(),
+            childCount: db.length,
             (context, i) {
               return SingleChildScrollView(
                 child: Align(
@@ -41,12 +50,13 @@ class TextView extends HookWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 0, bottom: 75),
                     child: SelectionArea(
-                      child: Text(
-                        dataModel.data[i].text,
+                        child: Obx(
+                      () => Text(
+                        db.data[i].text,
                         style:
-                            TextStyle(fontSize: config.fontSize, height: 1.8),
+                            TextStyle(fontSize: Config().fontSize, height: 1.8),
                       ),
-                    ),
+                    )),
                   ),
                 ),
               );

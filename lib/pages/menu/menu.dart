@@ -4,17 +4,11 @@ import 'package:acim_helper/pages/favorite/favorite.dart';
 import 'package:acim_helper/pages/history/history.dart';
 import 'package:acim_helper/pages/settings/settings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
-class MenuDrawer extends StatefulWidget {
+class MenuDrawer extends StatelessWidget {
   const MenuDrawer({Key? key}) : super(key: key);
 
-  @override
-  _MenuDrawerState createState() => _MenuDrawerState();
-}
-
-class _MenuDrawerState extends State<MenuDrawer> {
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);

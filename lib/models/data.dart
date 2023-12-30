@@ -1,49 +1,69 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:acim_helper/configuration.dart';
-import 'package:flutter/foundation.dart';
+import 'package:acim_helper/models/drawItem.dart';
+import 'package:acim_helper/models/favorite.dart';
+import 'package:acim_helper/models/history.dart';
+import 'package:acim_helper/models/viewItem.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/state_manager.dart';
 
 class DataItem {
+  final String id;
   final int index;
   final String text;
-  DataItem(this.index, this.text);
+
+  DataItem(this.index, this.text, this.id);
+
+  factory DataItem.fromJson(Map<String, dynamic> json) {
+    return DataItem(
+      json['index'] as int,
+      json['text'] as String,
+      json['id'] as String,
+    );
+  }
 }
 
-List<DataItem> dataList = [];
+final dataList = <DataItem>[].obs;
 
-class DataModel extends ChangeNotifier {
-  DataModel();
+final _hashMap = <String, DataItem>{}.obs;
 
-  bool get isEmpty => data.isEmpty;
+// 抽卡得到的 item
+final class Database {
+  Database();
 
   List<DataItem> get data => dataList;
 
-  String getText(int index) {
-    return data[index].text;
+  int get length => data.length;
+
+  bool get isEmpty => data.isEmpty;
+
+  // 获取一组 id 对应的数据
+  List<DataItem> getListByIds(List<String> ids) {
+    final list = <DataItem>[];
+    for (var id in ids) {
+      list.add(getItemById(id)!);
+    }
+    return list;
   }
 
-  int getLength() {
-    return data.length;
-  }
-
-  int randomIndex() {
-    var random = Random();
-    // 获取随机数
-    return random.nextInt(data.length);
-  }
+  // 获取指定 id 的数据
+  DataItem? getItemById(String id) => _hashMap[id];
 
   // 随机获取一条数据
   DataItem random() {
     // 生成随机数
-    var index = randomIndex();
+    var random = Random();
+    // 获取随机数
+    random.nextInt(dataList.length);
+    var index = random.nextInt(dataList.length);
+    print('random: $index');
     // 返回随机数据
-    return data[index];
+    return dataList[index];
   }
 
-  Future<List<DataItem>> loadData() async {
-    List<DataItem> data = [];
-
+  // 加载数据
+  static Future<void> load() async {
     String fileName = {
       Language.zhHans: 'zh_Hans.json',
       Language.zhHant: 'zh_Hant.json',
@@ -51,13 +71,21 @@ class DataModel extends ChangeNotifier {
     }[Config().language]!;
 
     var string = await rootBundle.loadString('assets/$fileName');
-    var textList = jsonDecode(string).cast<String>();
-    for (var i = 0; i < textList.length; i++) {
-      data.add(DataItem(i, textList[i]));
-    }
-    dataList = data;
 
-    notifyListeners();
-    return dataList;
+    dataList.value = (jsonDecode(string) as List)
+        .map((item) => DataItem.fromJson(item))
+        .toList();
+
+    _hashMap.value = {for (var item in dataList) item.id: item};
+
+    print('reload');
+
+    // // 如果是第一次打开，随机抽取一条数据
+    // if (drawItem.value.index == -1) {
+    //   drawItem.value = Database().random();
+    //   viewItem.value = drawItem.value;
+    // }
   }
 }
+
+final Database db = Database();

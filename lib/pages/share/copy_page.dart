@@ -1,32 +1,20 @@
 import 'package:acim_helper/pages/share/copy_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/state_manager.dart';
 
-class CopyList extends StatefulHookWidget {
+class CopyList extends StatelessWidget {
   const CopyList(this.text, {Key? key}) : super(key: key);
 
   final String text;
 
   @override
-  _CopyListState createState() => _CopyListState();
-}
-
-class _CopyListState extends State<CopyList> {
-  CopySentence copySentence = CopySentence('');
-
-  @override
-  void initState() {
-    super.initState();
-    copySentence = CopySentence(widget.text);
-  }
-
-  @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final copySentence = CopySentence(text).obs;
 
     void copy() {
-      Clipboard.setData(ClipboardData(text: copySentence.copySentence()))
+      Clipboard.setData(ClipboardData(text: copySentence.value.copySentence()))
           .then((value) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -40,21 +28,19 @@ class _CopyListState extends State<CopyList> {
       child: Column(
         children: [
           Text(
-            copySentence.title,
+            copySentence.value.title,
             style: const TextStyle(fontSize: 18),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: copySentence.arr.length,
+              itemCount: copySentence.value.arr.length,
               itemBuilder: (context, index) {
-                bool selected = copySentence.copyIndexes[index]!;
+                bool selected = copySentence.value.copyIndexes[index]!;
                 return CheckboxListTile(
-                  title: Text(copySentence.arr[index]),
+                  title: Text(copySentence.value.arr[index]),
                   value: selected,
                   onChanged: (value) {
-                    setState(() {
-                      copySentence.copyIndexes[index] = value!;
-                    });
+                    copySentence.value.copyIndexes[index] = value!;
                   },
                   selected: selected,
                   selectedTileColor: theme.colorScheme.primaryContainer,

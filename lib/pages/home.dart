@@ -1,40 +1,31 @@
+import 'package:acim_helper/models/data.dart';
+import 'package:acim_helper/models/drawItem.dart';
 import 'package:acim_helper/models/history.dart';
-import 'package:acim_helper/models/text.dart';
+import 'package:acim_helper/models/viewItem.dart';
 import 'package:acim_helper/pages/favorite/favorite_btn.dart';
 import 'package:acim_helper/pages/menu/menu.dart';
 import 'package:acim_helper/pages/search/search.dart';
 import 'package:acim_helper/pages/share/share.dart';
 import 'package:acim_helper/pages/text.dart';
-import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
+import 'package:get/state_manager.dart';
 
-class HomeArguments {
-  final int index;
-
-  HomeArguments(this.index);
-}
-
-class HomePage extends StatefulHookWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
   Widget build(BuildContext context) {
-    CurrentText currentText = useContext().watch<CurrentText>();
-    DataModel data = useContext().watch<DataModel>();
-    HistoryModel history = useContext().watch<HistoryModel>();
-    // ScaffoldState scaffold = Scaffold.of(context);
+    ever(viewItem, (callback) => HistoryModel().add(viewItem.value));
+    // ever(drawItem, (callback) => viewItem.value = drawItem.value);
+    // ever(dataList, (callback) => drawItem.value = Database().random());
 
-    useEffect(() {
-      history.add(currentText.current);
-      return null;
-    }, [currentText.current]);
+    // 如果是第一次打开，随机抽取一条数据
+    if (viewItem.value.index == -1) {
+      drawItem.value = Database().random();
+      viewItem.value = drawItem.value;
+      // HistoryModel().add(drawItem.value);
+    }
+    print('home');
 
     return Scaffold(
       appBar: AppBar(
@@ -45,19 +36,19 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              TextView(
-                index: currentText.getCurrent.index,
-                key: Key(currentText.getCurrent.index.toString()),
-              ),
+              Obx(() => TextView(
+                    data: drawItem.value,
+                    key: Key(drawItem.value.id),
+                  )),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            currentText.changeText(data.randomIndex());
-          });
+          drawItem.value = db.random();
+          viewItem.value = drawItem.value;
+          // HistoryModel().add(drawItem.value);
         },
         child: const Icon(Icons.refresh_outlined),
       ),

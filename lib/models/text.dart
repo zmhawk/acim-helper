@@ -1,24 +1,13 @@
-import 'package:acim_helper/models/data.dart';
-import 'package:flutter/material.dart';
+// import 'package:acim_helper/models/data.dart';
 
-class CurrentText extends ChangeNotifier {
-  // final DataModel data;
+// final _item = DataItem
 
-  int current = DataModel().randomIndex();
+// class CurrentText {
+//   // final DataModel data;
 
-  CurrentText();
+//   CurrentText();
 
-  DataItem get getCurrent {
-    if (current == -1) return DataItem(-1, '');
-    return dataList[current];
-  }
-
-  void changeText(int item) {
-    current = item;
-    notifyListeners();
-  }
-
-  update() {
-    notifyListeners();
-  }
-}
+//   set item(DataItem newItem) {
+//     _item = newItem;
+//   }
+// }

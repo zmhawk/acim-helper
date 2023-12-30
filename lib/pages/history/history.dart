@@ -1,19 +1,13 @@
-import 'package:acim_helper/models/data.dart';
+import 'package:acim_helper/models/drawItem.dart';
 import 'package:acim_helper/models/history.dart';
-import 'package:acim_helper/models/text.dart';
+import 'package:acim_helper/models/viewItem.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:provider/provider.dart';
 
-class HistoryPage extends HookWidget {
+class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    HistoryModel historyModel = useContext().watch<HistoryModel>();
-    List<DataItem> history = historyModel.history;
-    CurrentText currentText = useContext().watch<CurrentText>();
-
     return Scaffold(
         appBar: AppBar(
           title: const Text('浏览历史'),
@@ -32,7 +26,8 @@ class HistoryPage extends HookWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 onTap: () {
-                  currentText.changeText(history[index].index);
+                  drawItem.value = history[index];
+                  viewItem.value = history[index];
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     Navigator.defaultRouteName,

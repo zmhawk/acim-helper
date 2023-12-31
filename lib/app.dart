@@ -3,6 +3,7 @@ import 'package:acim_helper/pages/home.dart';
 import 'package:acim_helper/pages/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -19,6 +20,11 @@ class App extends StatelessWidget {
         });
       }
 
+      FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+      FirebaseAnalyticsObserver observer =
+          FirebaseAnalyticsObserver(analytics: analytics);
+      analytics.logAppOpen();
+
       return MaterialApp(
         title: 'ACIM 小帮手',
         theme: ThemeData(
@@ -27,6 +33,7 @@ class App extends StatelessWidget {
         darkTheme: ThemeData.dark(),
         themeMode: Config().themeMode,
         home: const HomePage(),
+        navigatorObservers: [observer],
       );
     });
   }

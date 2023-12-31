@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:acim_helper/pages/search/search_panel.dart';
 import 'package:acim_helper/pages/search/search_utils.dart';
 import 'package:animations/animations.dart';
@@ -14,11 +16,14 @@ class SearchPage extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     loadWords();
 
+    log('SearchPage');
+
     return OpenContainer(
       transitionType: _containerTransitionType,
-      transitionDuration: const Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 400),
       openBuilder: (context, _) {
-        return SearchPanel();
+        log('openBuilder');
+        return const SearchPanel();
       },
       closedColor: theme.colorScheme.surface,
       openColor: theme.colorScheme.surface,

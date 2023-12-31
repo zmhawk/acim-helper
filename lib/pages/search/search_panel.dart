@@ -7,21 +7,6 @@ class SearchPanel extends StatelessWidget {
 
   final controller = SearchController();
   final focusNode = FocusNode();
-  // final tab = 'fuzzy'.obs;
-
-  // late TextEditingController _controller;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _controller = TextEditingController();
-  // }
-
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -131,40 +131,72 @@ SearchResult fuzzySearch({
 }
 
 class HighlightText extends StatelessWidget {
-  const HighlightText({Key? key, required this.text, required this.keyword})
+  const HighlightText(
+      {Key? key, required this.text, required this.keyword, required this.type})
       : super(key: key);
 
   final String text;
   final String keyword;
+  final String type;
+
+  List<TextSpan> buildSpansByReg(RegExp reg, TextStyle highlightStyle) {
+    List<TextSpan> spans = [];
+    final matches = reg.allMatches(text);
+    for (var i = 0; i < matches.length; i++) {
+      var match = matches.toList()[i];
+
+      var lastEnd = i == 0 ? 0 : matches.toList()[i - 1].end;
+      if (lastEnd != match.start) {
+        spans.add(TextSpan(
+          text: text.substring(lastEnd, match.start),
+        ));
+      }
+
+      spans.add(
+        TextSpan(
+            text: text.substring(match.start, match.end),
+            style: highlightStyle),
+      );
+    }
+    spans.add(TextSpan(
+      text: text.substring(matches.last.end),
+    ));
+    return spans;
+  }
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
+    final highlightStyle = TextStyle(
+      color: theme.colorScheme.onPrimaryContainer,
+      backgroundColor: theme.colorScheme.primaryContainer,
+    );
+
     List<TextSpan> spans = [];
-    int start = 0;
-    int end = 0;
-    int len = keyword.length;
-    while (end < text.length) {
-      end = text.indexOf(keyword, start);
-      if (end == -1) {
-        spans.add(TextSpan(text: text.substring(start)));
-        break;
-      } else {
-        spans.add(TextSpan(text: text.substring(start, end)));
-        spans.add(TextSpan(
-            text: text.substring(end, end + len),
-            style: TextStyle(
-                color: theme.colorScheme.onPrimaryContainer,
-                backgroundColor: theme.colorScheme.primaryContainer)));
-        start = end + len;
-      }
+
+    if (type == 'exact') {
+      List<String> keywords =
+          keyword.replaceAll(r'[,，。;；？?！! ]+', ' ').split(' ');
+      keywords =
+          keywords.map<String>((s) => s.replaceAll(r'\.', '\\.')).toList();
+      RegExp reg = RegExp('(${keywords.join('|')})+', caseSensitive: false);
+      spans = buildSpansByReg(reg, highlightStyle);
     }
+
+    if (type == 'fuzzy') {
+      RegExp reg =
+          RegExp('[${keyword.replaceAll(' ', '')}]+', caseSensitive: false);
+      spans = buildSpansByReg(reg, highlightStyle);
+    }
+
     return RichText(
-        text: TextSpan(
-            children: spans,
-            style: TextStyle(
-                textBaseline: TextBaseline.alphabetic,
-                color: theme.colorScheme.onSurface)));
+      text: TextSpan(
+        children: spans,
+        style: TextStyle(
+            textBaseline: TextBaseline.alphabetic,
+            color: theme.colorScheme.onSurface),
+      ),
+    );
   }
 }

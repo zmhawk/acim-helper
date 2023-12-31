@@ -3,11 +3,12 @@ import 'package:acim_helper/pages/loading.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const LoadingPage(
-    onInitializationComplete: runMainApp,
-  ));
+  runApp(const App());
+  // runApp(const LoadingPage(
+  //   onInitializationComplete: runMainApp,
+  // ));
 }
 
-void runMainApp() {
-  runApp(const App());
-}
+// void runMainApp() {
+//   runApp(const App());
+// }

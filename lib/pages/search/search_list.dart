@@ -17,25 +17,33 @@ class SearchResultList extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
+    final validKeyword =
+        keyword.replaceAll(RegExp(r'[^a-zA-Z0-9\u4e00-\u9fa5 ]'), '');
+
+    log(validKeyword);
+
     SearchResult result = SearchResult(data: [], length: 0, page: 1, total: 0);
     if (tab == 'fuzzy') {
-      result =
-          fuzzySearch(keyword: keyword, length: 200, page: 1, data: db.data);
+      result = fuzzySearch(
+          keyword: validKeyword, length: 200, page: 1, data: db.data);
     } else if (tab == 'exact') {
-      result =
-          exactSearch(keyword: keyword, length: 200, page: 1, data: db.data);
+      result = exactSearch(
+          keyword: validKeyword, length: 200, page: 1, data: db.data);
     }
 
     log('result length: ${result.data.length}');
 
     return ListView.separated(
         itemBuilder: (context, index) {
+          // log('index: $index');
           return ListTile(
             tileColor: theme.searchViewTheme.backgroundColor,
             title: Padding(
               padding: const EdgeInsets.all(16),
               child: HighlightText(
-                  text: result.data[index].text, keyword: keyword),
+                  text: result.data[index].text,
+                  keyword: validKeyword,
+                  type: tab),
             ),
             onTap: () {
               drawItem.value = result.data[index];

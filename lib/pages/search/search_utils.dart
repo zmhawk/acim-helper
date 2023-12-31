@@ -1,8 +1,37 @@
 import 'dart:core';
 import 'dart:math';
+import 'dart:developer';
 
+import 'package:acim_helper/configuration.dart';
 import 'package:acim_helper/models/data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+RegExp fenciReg = RegExp(r'[\u4e00-\u9fa5]');
+
+void loadWords() async {
+  // 自定义词典
+  var dict = '上主|罪咎|知见|悟道|慧见';
+  // 自动分析的词典
+  var string = await rootBundle.loadString('assets/words.txt');
+  fenciReg = RegExp('($dict|$string|[\u4e00-\u9fa5])', caseSensitive: false);
+}
+
+// RegExp getExactReg(String keyword) {
+//   List<String> keywords = keyword.split(' ').map((e) => e.trim()).toList();
+//   return RegExp('(${keywords.join('|')})+', caseSensitive: false);
+// }
+
+List<String> cut(String keyword) {
+  // 暂时仅简体中文支持分词
+  if (isSimplified()) {
+    return fenciReg.allMatches(keyword).map((e) {
+      return e.group(0)!;
+    }).toList();
+    // return RegExp('(${keywords.join('|')})+', caseSensitive: false);
+  }
+  return keyword.split("").map((e) => e.trim()).toList();
+}
 
 class SearchResult {
   final int total;
@@ -46,7 +75,6 @@ SearchResult exactSearch({
     return defaultResult;
   }
   List<String> keywords = keyword.split(" ").map((e) => e.trim()).toList();
-  keywords = keywords.map((s) => s.replaceAll(RegExp(r'\.'), r'\.')).toList();
   List<DataItem> result = [...data];
   for (var word in keywords) {
     List<DataItem> arr = [];
@@ -75,8 +103,9 @@ SearchResult fuzzySearch({
   int page = 1,
   List<DataItem> data = const [],
 }) {
-  List<String> keywords = keyword.split("").map((e) => e.trim()).toList();
+  List<String> keywords = cut(keyword);
   keywords = keywords.toSet().toList();
+  print('keywords: $keywords');
   List<SearchItem> result = [];
 
   if (keywords.isEmpty) {
@@ -102,12 +131,12 @@ SearchResult fuzzySearch({
     return defaultResult;
   }
 
-  result.sort((a, b) => b.count - a.count);
-  if (result.length > 200) {
-    result.removeRange(200, result.length);
-  }
+  // result.sort((a, b) => b.count - a.count);
+  // if (result.length > 200) {
+  //   result.removeRange(200, result.length);
+  // }
 
-  RegExp reg = RegExp('[${keywords.join()}]+', caseSensitive: false);
+  RegExp reg = RegExp('(${keywords.join('|')})+', caseSensitive: false);
   for (var item in result) {
     List<String>? arr =
         reg.allMatches(item.text).map((match) => match.group(0)!).toList();
@@ -124,6 +153,10 @@ SearchResult fuzzySearch({
     }
     return b.count - a.count;
   });
+
+  if (result.length > 200) {
+    result.removeRange(200, result.length);
+  }
 
   return toPageData(length: length, page: page, items: result);
 }
@@ -171,19 +204,18 @@ class HighlightText extends StatelessWidget {
       backgroundColor: theme.colorScheme.primaryContainer,
     );
 
-    List<TextSpan> spans = [];
+    List<String> keywords = [];
 
     if (type == 'exact') {
-      List<String> keywords = keyword.split(' ').map((e) => e.trim()).toList();
-      RegExp reg = RegExp('(${keywords.join('|')})+', caseSensitive: false);
-      spans = buildSpansByReg(reg, highlightStyle);
+      keywords = keyword.split(' ').map((e) => e.trim()).toList();
     }
 
     if (type == 'fuzzy') {
-      RegExp reg =
-          RegExp('[${keyword.replaceAll(' ', '')}]+', caseSensitive: false);
-      spans = buildSpansByReg(reg, highlightStyle);
+      keywords = cut(keyword);
     }
+
+    RegExp reg = RegExp('(${keywords.join('|')})+', caseSensitive: false);
+    List<TextSpan> spans = buildSpansByReg(reg, highlightStyle);
 
     return RichText(
       text: TextSpan(

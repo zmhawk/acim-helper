@@ -31,7 +31,7 @@ class SearchResultList extends StatelessWidget {
           keyword: validKeyword, length: 200, page: 1, data: db.data);
     }
 
-    log('result length: ${result.data.length}');
+    log('result : ${result.data.length}');
 
     return ListView.separated(
         itemBuilder: (context, index) {

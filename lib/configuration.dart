@@ -13,6 +13,10 @@ final config = {
   'color': Colors.lightGreen.value
 }.obs;
 
+bool isSimplified() {
+  return config['language'] == Language.zhHans.index;
+}
+
 class Config {
   ThemeMode get themeMode {
     return ThemeMode.values[config['themeMode']!];

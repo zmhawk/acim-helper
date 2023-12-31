@@ -142,7 +142,7 @@ SearchResult fuzzySearch({
         reg.allMatches(item.text).map((match) => match.group(0)!).toList();
     int weight = 1;
     for (var str in arr) {
-      weight *= str.length;
+      weight += str.length * str.length;
     }
     item.weight = weight;
   }

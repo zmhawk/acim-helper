@@ -18,7 +18,7 @@ class SearchResultList extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     final validKeyword =
-        keyword.replaceAll(RegExp(r'[^a-zA-Z0-9\u4e00-\u9fa5 ]'), '');
+        keyword.replaceAll(RegExp(r'[^a-zA-Z0-9\u4e00-\u9fa5 ]'), ' ');
 
     log(validKeyword);
 
@@ -35,7 +35,10 @@ class SearchResultList extends StatelessWidget {
 
     return ListView.separated(
         itemBuilder: (context, index) {
-          // log('index: $index');
+          // 原因不明，这里的index会超出范围
+          if (index > result.data.length - 1) {
+            return null;
+          }
           return ListTile(
             tileColor: theme.searchViewTheme.backgroundColor,
             title: Padding(

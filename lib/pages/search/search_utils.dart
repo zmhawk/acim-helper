@@ -42,11 +42,10 @@ SearchResult exactSearch({
   int page = 1,
   List<DataItem> data = const [],
 }) {
-  String temp = keyword.replaceAll(RegExp(r'[,，。;；？?!！|&【】”“ ]+'), " ");
-  if (temp.isEmpty || temp.trim() == "") {
+  if (keyword.trim() == "") {
     return defaultResult;
   }
-  List<String> keywords = temp.split(" ");
+  List<String> keywords = keyword.split(" ").map((e) => e.trim()).toList();
   keywords = keywords.map((s) => s.replaceAll(RegExp(r'\.'), r'\.')).toList();
   List<DataItem> result = [...data];
   for (var word in keywords) {
@@ -76,8 +75,7 @@ SearchResult fuzzySearch({
   int page = 1,
   List<DataItem> data = const [],
 }) {
-  List<String> keywords =
-      keyword.replaceAll(RegExp(r'[,，。.\-;；？?！!"“” ]+'), "").split("");
+  List<String> keywords = keyword.split("").map((e) => e.trim()).toList();
   keywords = keywords.toSet().toList();
   List<SearchItem> result = [];
 
@@ -176,10 +174,7 @@ class HighlightText extends StatelessWidget {
     List<TextSpan> spans = [];
 
     if (type == 'exact') {
-      List<String> keywords =
-          keyword.replaceAll(r'[,，。;；？?！! ]+', ' ').split(' ');
-      keywords =
-          keywords.map<String>((s) => s.replaceAll(r'\.', '\\.')).toList();
+      List<String> keywords = keyword.split(' ').map((e) => e.trim()).toList();
       RegExp reg = RegExp('(${keywords.join('|')})+', caseSensitive: false);
       spans = buildSpansByReg(reg, highlightStyle);
     }

@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:acim_helper/pages/favorite/favorite.dart';
 import 'package:acim_helper/pages/history/history.dart';
+import 'package:acim_helper/pages/menu/version.dart';
 import 'package:acim_helper/pages/settings/settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
@@ -57,8 +59,9 @@ class MenuDrawer extends StatelessWidget {
               context: context,
               applicationName: 'ACIM 小帮手',
               applicationIcon: const Icon(Icons.book_outlined),
+              applicationVersion: '版本：${getVersion()}',
               children: [
-                const Text('原微信小程序：ACIM 小帮手'),
+                const Text('原微信小程序“ACIM 小帮手”'),
                 const Text('作者：逆行者'),
                 const Text('微信公众号：逆行者的奇迹漫谈'),
                 const Linkify(
@@ -67,6 +70,19 @@ class MenuDrawer extends StatelessWidget {
             );
           },
         ),
+        // 检查更新
+        if (!kIsWeb || kDebugMode)
+          ListTile(
+            leading: const Icon(Icons.update_outlined),
+            title: const Text('检查更新'),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const VersionDialog();
+                  });
+            },
+          )
       ],
     );
   }

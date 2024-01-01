@@ -18,9 +18,7 @@
 
 ### Android（安卓）
 
-请至 [Release](https://github.com/zmhawk/acim-helper/releases) 页面下载
-
-对于大部分手机来说，选择 `arm64-v8a-release.apk` 即可
+下载链接： [acim-helper.apk](https://yu-public-hongkong.oss-cn-hongkong.aliyuncs.com/acim-helper.apk)
 
 目前国内情况越来越严峻，安卓手机也开始要求应用备案了，我自己安装的时候也头疼，如果不行就用网页版吧。
 

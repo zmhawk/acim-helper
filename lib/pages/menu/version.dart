@@ -119,7 +119,7 @@ class VersionDialog extends StatelessWidget {
         return AlertDialog(
           title: const Text('检查更新'),
           content: SizedBox(
-            height: 180,
+            height: 200,
             width: 300,
             child: s.loading
                 ? const Center(
@@ -136,7 +136,12 @@ class VersionDialog extends StatelessWidget {
                       const Text(''),
                       Text('最新版本：${s.latest!.tagName}'),
                       Text('发布时间：${s.getDate()}'),
-                      Linkify(text: '下载链接：${s.getDownloadUrl()}')
+                      const Linkify(
+                          text:
+                              '下载链接：https://yu-public-hongkong.oss-cn-hongkong.aliyuncs.com/acim-helper.apk'),
+                      const Linkify(
+                          text:
+                              '（如链接失效，请前往微信公众号“逆行者的奇迹漫谈”或项目地址 https://github.com/zmhawk/acim-helper 获取最新下载链接）')
                     ],
                   ),
           ),

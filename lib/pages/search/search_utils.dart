@@ -17,11 +17,6 @@ void loadWords() async {
   fenciReg = RegExp('($dict|$string|[\u4e00-\u9fa5])', caseSensitive: false);
 }
 
-// RegExp getExactReg(String keyword) {
-//   List<String> keywords = keyword.split(' ').map((e) => e.trim()).toList();
-//   return RegExp('(${keywords.join('|')})+', caseSensitive: false);
-// }
-
 List<String> cut(String keyword) {
   // 暂时仅简体中文支持分词
   if (isSimplified()) {

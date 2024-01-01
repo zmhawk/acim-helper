@@ -18,27 +18,14 @@ class SearchPage extends StatelessWidget {
 
     log('SearchPage');
 
-    return OpenContainer(
-      transitionType: _containerTransitionType,
-      transitionDuration: const Duration(milliseconds: 400),
-      openBuilder: (context, _) {
-        log('openBuilder');
-        return const SearchPanel();
-      },
-      closedColor: theme.colorScheme.surface,
-      openColor: theme.colorScheme.surface,
-      middleColor: theme.colorScheme.surface,
-      closedElevation: 0,
-      closedShape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      closedBuilder: (context, openContainer) {
-        return IconButton(
-          icon: const Icon(Icons.search_outlined),
-          onPressed: () {
-            openContainer();
-          },
-        );
+    return IconButton(
+      icon: const Icon(Icons.search_outlined),
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const SearchPanel(),
+                fullscreenDialog: true));
       },
     );
   }

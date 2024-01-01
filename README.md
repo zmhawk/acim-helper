@@ -18,7 +18,7 @@
 
 ### Android（安卓）
 
-下载链接： [acim-helper.apk](https://yu-public-hongkong.oss-cn-hongkong.aliyuncs.com/acim-helper.apk)
+下载链接： [acim-helper.apk](https://yu-public-hongkong.oss-cn-hongkong.aliyuncs.com/acim-helper.apk.1)
 
 目前国内情况越来越严峻，安卓手机也开始要求应用备案了，我自己安装的时候也头疼，如果不行就用网页版吧。
 

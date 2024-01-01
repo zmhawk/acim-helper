@@ -138,7 +138,7 @@ class VersionDialog extends StatelessWidget {
                       Text('发布时间：${s.getDate()}'),
                       const Linkify(
                           text:
-                              '下载链接：https://yu-public-hongkong.oss-cn-hongkong.aliyuncs.com/acim-helper.apk'),
+                              '下载链接：https://yu-public-hongkong.oss-cn-hongkong.aliyuncs.com/acim-helper.apk.1'),
                       const Linkify(
                           text:
                               '（如链接失效，请前往微信公众号“逆行者的奇迹漫谈”或项目地址 https://github.com/zmhawk/acim-helper 获取最新下载链接）')

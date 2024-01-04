@@ -38,7 +38,8 @@ final class Database {
   List<DataItem> getListByIds(List<String> ids) {
     final list = <DataItem>[];
     for (var id in ids) {
-      list.add(getItemById(id)!);
+      final item = getItemById(id);
+      if (item != null) list.add(item);
     }
     return list;
   }
